@@ -1,2 +1,2 @@
-div{color:blue}
+body{font-family:'Josefin Sans', sans-serif}a.navbar-link{color:white}div.top-nav,div.bottom-nav{background-color:#f2994a;color:white;height:60px}div.top-nav{font-family:'Lobster', cursive;font-size:20px;line-height:60px}img.calendar,img.list{height:40px;margin-bottom:-4px}div.content{margin-top:80px}table{width:100%}th,td{border:1px solid #f7c192;height:60px;text-align:center;width:14.28571%}td:hover{background-color:#f2994a}div.date{font-size:20px;font-weight:bold;margin-bottom:10px}.recipe-category{font-size:20px;font-weight:bold;margin:5px 0}
 /*# sourceMappingURL=style.css.map */

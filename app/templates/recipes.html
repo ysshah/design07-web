@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+        {% for mealType, recipes in mealTypes %}
+            <div class="recipe-category">{{ mealType }}</div>
+            {% for recipe in recipes %}
+                <div class="recipe">
+                    <div class="name">{{ recipe.RecipeName }}</div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        </div>
+        <div class="col-6">
+        {% include "recipes_view.html" %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

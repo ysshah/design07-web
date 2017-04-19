@@ -1,3 +1,55 @@
-div {
-    color: blue;
+$primary-color: #f2994a;
+
+body {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+a.navbar-link {
+    color: white;
+}
+div.top-nav, div.bottom-nav {
+    background-color: $primary-color;
+    color: white;
+    height: 60px;
+}
+div.top-nav {
+    font-family: 'Lobster', cursive;
+    font-size: 20px;
+    line-height: 60px;
+}
+div.bottom-nav {
+
+}
+img.calendar, img.list {
+    height: 40px;
+    margin-bottom: -4px;
+}
+div.content {
+    margin-top: 80px;
+}
+
+/* Calendar page */
+table {
+    width: 100%;
+}
+th, td {
+    border: 1px solid #f7c192;
+    height: 60px;
+    text-align: center;
+    width: 1 / 7 * 100%;
+}
+td:hover {
+    background-color: $primary-color;
+}
+div.date {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Recipes page */
+.recipe-category {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px 0;
 }
