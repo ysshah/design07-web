@@ -1,0 +1,15 @@
+<div>{{ thisRecipe.RecipeName }}</div>
+<img src="{{ thisRecipe.ImageSRC }}">
+<div>Ingredients</div>
+<ul>
+{% for ingredient in thisRecipe.Ingredients %}
+    <li>{{ ingredient }}</li>
+{% endfor %}
+</ul>
+
+<div>Directions</div>
+<ol>
+{% for direction in thisRecipe.Directions %}
+    <li>{{ direction }}</li>
+{% endfor %}
+</ol>

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <div class="container">
     <div class="row">
         <div class="col-6">
@@ -14,10 +13,22 @@
             {% endfor %}
         {% endfor %}
         </div>
-        <div class="col-6">
-        {% include "recipes_view.html" %}
+        <div class="col-6" id="view-recipe">
+        {% include "view_recipe.html" %}
         </div>
     </div>
 </div>
-
 {% endblock content %}
+
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $('.recipe .name').click(function() {
+        var data = {'name': $(this).text()};
+        $('div#view-recipe').load("{% url 'view-recipe' %}", data);
+    });
+
+});
+</script>
+{% endblock script %}
