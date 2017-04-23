@@ -4,21 +4,19 @@
 <form action="{% url 'recipes_add' %}" method="post">
 <div class="container add">
     <div class="row">
-        <div class="col-8 push-2 add name">
+        <div class="col-md-8 push-md-2 add name">
             <input class="form-control" type="text" name="RecipeName" placeholder="Enter recipe name">
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 text-center">
-            <label class="upload" for="files">
-                <img class="upload" src="{% static 'icons/camera.svg' %}">
-                <span>Upload an Image</span>
-            </label>
-            <input id="files" style="display:none;" type="file">
-        </div>
+    <div class="text-center">
+        <label class="upload" for="files">
+            <img class="upload" src="{% static 'icons/camera.svg' %}">
+            <span>Upload an Image</span>
+        </label>
+        <input id="files" style="display:none;" type="file">
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
             <h5>Ingredients</h5>
             <div class="add-button ingredient">
                 <img src="{% static 'icons/plus_black.svg' %}">
@@ -32,7 +30,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
             <h5>Directions</h5>
             <div class="add-button direction">
                 <img src="{% static 'icons/plus_black.svg' %}">

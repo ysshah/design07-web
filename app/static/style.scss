@@ -38,11 +38,10 @@ div.bottom-nav {
 
 }
 img.icon {
-    height: 40px;
-    margin-bottom: -4px;
-}
-img.icon-fixed {
     height: 32px;
+    &.in-nav {
+        margin-top: 4px;
+    }
 }
 div.content {
     height: 100%;
@@ -78,8 +77,9 @@ th, td {
     text-align: center;
     width: 1 / 7 * 100%;
 }
-td:hover {
+td.valid:hover {
     background-color: $primary-color;
+    cursor: pointer;
 }
 div.date {
     font-size: 20px;

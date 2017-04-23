@@ -17,9 +17,9 @@
                 <div class="row">
                     <div class="col-4 middle" id="sort_or_down">
                     {% if calendar_selected %}
-                        <img class="icon-fixed hidden-md-up" src="{% static 'icons/down_arrow.svg' %}">
+                        <img class="icon in-nav hidden-md-up" src="{% static 'icons/down_arrow.svg' %}">
                     {% elif recipes_selected or pantry_selected %}
-                        <img class="icon" src="{% static 'icons/down_up.svg' %}">
+                        <img class="icon in-nav" src="{% static 'icons/down_up.svg' %}">
                     {% endif %}
                     </div>
                     <a href="{% url 'calendar' %}" class="col-4 text-center middle navbar-link">
@@ -27,17 +27,17 @@
                     </a>
                     {% if calendar_selected %}
                         <a href="{% url 'calendar_add' %}" class="col-4 text-right navbar-link">
-                            <img class="icon" src="{% static 'icons/plus_white.svg' %}">
+                            <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
                             <div>Add Meal</div>
                         </a>
                     {% elif recipes_selected %}
                         <a href="{% url 'recipes_add' %}" class="col-4 text-right navbar-link">
-                            <img class="icon" src="{% static 'icons/plus_white.svg' %}">
+                            <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
                             <div>Add Recipe</div>
                         </a>
                     {% elif pantry_selected %}
                         <a href="{% url 'pantry_add' %}" class="col-4 text-right navbar-link">
-                            <img class="icon" src="{% static 'icons/plus_white.svg' %}">
+                            <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
                             <div>Add Ingredient</div>
                         </a>
                     {% endif %}
@@ -51,15 +51,15 @@
             <div class="container">
                 <div class="row">
                     <a href="{% url 'calendar' %}" class="col-4 text-center navbar-link {{calendar_selected}}">
-                        <img class="icon" src="{% static 'icons/calendar.svg' %}">
+                        <img class="icon in-nav" src="{% static 'icons/calendar.svg' %}">
                         <div>Calendar</div>
                     </a>
                     <a href="{% url 'recipes' %}" class="col-4 text-center navbar-link {{recipes_selected}}">
-                        <img class="icon" src="{% static 'icons/chef.svg' %}">
+                        <img class="icon in-nav" src="{% static 'icons/chef.svg' %}">
                         <div>Recipes</div>
                     </a>
                     <a href="{% url 'pantry' %}" class="col-4 text-center navbar-link {{pantry_selected}}">
-                        <img class="icon" src="{% static 'icons/list.svg' %}">
+                        <img class="icon in-nav" src="{% static 'icons/list.svg' %}">
                         <div>Pantry</div>
                     </a>
                 </div>

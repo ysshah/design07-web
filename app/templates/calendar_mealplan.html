@@ -4,7 +4,7 @@
         <div>
             <span class="mealType">{{ mealType }}</span>
             <span>-</span>
-            <a href="{% url 'recipes' meal %}">{{ meal }}</a>
+            <a href="{% url 'view_recipe' meal %}">{{ meal }}</a>
         </div>
     {% endfor %}
 {% endfor %}

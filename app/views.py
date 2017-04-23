@@ -76,14 +76,8 @@ def recipes(request, recipe_name=None):
         mealTypes.append(
             (mealType, [r for r in items if r['MealType'] == mealType])
         )
-    query = list(filter(lambda x: x['RecipeName'] == recipe_name, items))
-    if query:
-        thisRecipe = query[0]
-    else:
-        thisRecipe = mealTypes[0][1][0]
     context = {
         'mealTypes': mealTypes,
-        'thisRecipe': splitByNewline(thisRecipe),
         'recipes_selected': 'selected'
     }
     return render(request, 'recipes.html', context)
@@ -91,6 +85,17 @@ def recipes(request, recipe_name=None):
 
 def recipes_add(request):
     return render(request, 'recipes_add.html')
+
+
+def view_recipe(request, recipe_name):
+    query = recipesTable.get_item(Key={'RecipeName': recipe_name})
+    if 'Item' in query:
+        context = {
+            'recipe': splitByNewline(query['Item']),
+            'page_title': recipe_name + ' | '
+        }
+        return render(request, 'view_recipe.html', context)
+    raise Http404("Recipe does not exist.")
 
 
 def pantry(request):
@@ -108,12 +113,6 @@ def pantry(request):
 
 def pantry_add(request):
     return render(request, 'pantry_add.html')
-
-
-def view_recipe(request):
-    query = recipesTable.get_item(Key={'RecipeName': request.POST['name']})
-    context = {'thisRecipe': splitByNewline(query['Item'])}
-    return render(request, 'recipes_view.html', context)
 
 
 def splitByNewline(recipe):
