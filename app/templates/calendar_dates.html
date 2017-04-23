@@ -1,0 +1,31 @@
+<div class="text-center">
+    <button data-ym="{{ prev }}">Prev</button>
+    <span>{{ month_year }}</span>
+    <button data-ym="{{ next }}">Next</button>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in days %}
+        <tr>
+        {% for day in row %}
+        {% if day == 0 %}
+            <td></td>
+        {% else %}
+            <td>{{ day }}</td>
+        {% endif %}
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

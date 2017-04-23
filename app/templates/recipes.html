@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-6">
         {% for mealType, recipes in mealTypes %}
-            <div class="recipe-category">{{ mealType }}</div>
+            <h3 class="recipe-category">{{ mealType }}</h3>
             {% for recipe in recipes %}
                 <div class="recipe">
                     <div class="name">{{ recipe.RecipeName }}</div>

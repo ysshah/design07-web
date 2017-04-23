@@ -1,43 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <div class="container">
     <div class="row">
-        <div class="col-6">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Sun</th>
-                        <th>Mon</th>
-                        <th>Tue</th>
-                        <th>Wed</th>
-                        <th>Thu</th>
-                        <th>Fri</th>
-                        <th>Sat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for row in days %}
-                    <tr>
-                    {% for day in row %}
-                    {% if day == 0 %}
-                        <td></td>
-                    {% else %}
-                        <td>{{ day }}</td>
-                    {% endif %}
-                    {% endfor %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <div class="col-6" id="dates">
         </div>
-        <div class="col-6">
-        {% for d in dates %}
-            <div class="date">{{ d }}</div>
-        {% endfor %}
+        <div class="col-6" id="mealplan">
+        {% include "view_mealplan.html" %}
         </div>
     </div>
 </div>
-
 {% endblock content %}
+
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $('#dates').load("{% url 'calendar-dates' %}", {'ym': '2017-04'});
+
+    $('#dates').on('click', 'button', function() {
+        var data = {'ym': $(this).data('ym')};
+        $('#dates').load("{% url 'calendar-dates' %}", data);
+    });
+
+});
+</script>
+{% endblock script %}

@@ -25,7 +25,17 @@ img.calendar, img.list {
     margin-bottom: -4px;
 }
 div.content {
-    margin-top: 80px;
+    height: 100%;
+    padding: 80px 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    div.container {
+        height: 100%;
+        div.row {
+            height: 100%;
+        }
+    }
 }
 
 /* Calendar page */
@@ -49,7 +59,27 @@ div.date {
 
 /* Recipes page */
 .recipe-category {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 5px 0;
+    margin: 10px 0;
+}
+div.recipe {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+div#view-recipe {
+    overflow-y: scroll;
+    h4 {
+        margin-top: 15px;
+    }
+}
+
+/* Pantry page */
+div.container.add-ingredients {
+    form div.row {
+        div.inline-field {
+            padding: 0 5px;
+            margin-top: 10px;
+        }
+    }
 }

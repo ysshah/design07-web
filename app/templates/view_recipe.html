@@ -1,13 +1,15 @@
-<div>{{ thisRecipe.RecipeName }}</div>
-<img src="{{ thisRecipe.ImageSRC }}">
-<div>Ingredients</div>
+<h3 class="text-center">{{ thisRecipe.RecipeName }}</h3>
+<div class="text-center">
+    <img class="img-fluid" src="{{ thisRecipe.ImageSRC }}">
+</div>
+<h4>Ingredients</h4>
 <ul>
 {% for ingredient in thisRecipe.Ingredients %}
     <li>{{ ingredient }}</li>
 {% endfor %}
 </ul>
 
-<div>Directions</div>
+<h4>Directions</h4>
 <ol>
 {% for direction in thisRecipe.Directions %}
     <li>{{ direction }}</li>
