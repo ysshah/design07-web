@@ -1,14 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="recipes container">
 {% for mealType, recipes in mealTypes %}
+    <div class="container">
     <h3 class="recipe-category">{{ mealType }}</h3>
     {% for recipe in recipes %}
-        <a href="{% url 'view_recipe' recipe.RecipeName %}" class="recipe">
-            <div class="name">{{ recipe.RecipeName }}</div>
-        </a>
+        <div class="recipe">
+            <a href="{% url 'view_recipe' recipe.RecipeName %}" class="image">
+                <img src="{{ recipe.ImageSRC }}">
+            </a>
+            <a href="{% url 'view_recipe' recipe.RecipeName %}" class="name">
+                <div class="text-center">{{recipe.RecipeName}}</div>
+            </a>
+        </div>
     {% endfor %}
+    </div>
 {% endfor %}
-</div>
 {% endblock content %}
