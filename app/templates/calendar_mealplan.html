@@ -1,0 +1,10 @@
+{% for d in dates %}
+    <h5>{{ d.date }}</h5>
+    {% for mealType, meal in d.meals %}
+        <div>
+            <span class="mealType">{{ mealType }}</span>
+            <span>-</span>
+            <a href="{% url 'recipes' meal %}">{{ meal }}</a>
+        </div>
+    {% endfor %}
+{% endfor %}

@@ -3,9 +3,22 @@ $primary-color: #f2994a;
 body {
     font-family: 'Josefin Sans', sans-serif;
 }
+button, input, select, .tooltip {
+    font: inherit;
+}
+input[type=text], input[type=number] {
+    line-height: 1.5;
+}
+select.form-control {
+    height: 42px !important;
+}
 
+/* Navigation bars */
 a.navbar-link {
     color: white;
+    &.selected {
+        background-color: #f7c192;
+    }
 }
 div.top-nav, div.bottom-nav {
     background-color: $primary-color;
@@ -13,16 +26,23 @@ div.top-nav, div.bottom-nav {
     height: 60px;
 }
 div.top-nav {
-    font-family: 'Lobster', cursive;
-    font-size: 20px;
-    line-height: 60px;
+    .text-center {
+        font-family: 'Lobster', cursive;
+        font-size: 20px;
+    }
+    .middle {
+        line-height: 60px;
+    }
 }
 div.bottom-nav {
 
 }
-img.calendar, img.chef, img.list {
+img.icon {
     height: 40px;
     margin-bottom: -4px;
+}
+img.icon-fixed {
+    height: 32px;
 }
 div.content {
     height: 100%;
@@ -30,15 +50,25 @@ div.content {
     position: absolute;
     top: 0;
     width: 100%;
-    div.container {
-        height: 100%;
-        div.row {
-            height: 100%;
-        }
-    }
 }
 
 /* Calendar page */
+@media (min-width: 768px) {
+    #dates {
+        display: block !important;
+    }
+}
+@media (max-width: 767px) {
+    #dates {
+        display: none;
+    }
+}
+div.recipes.container {
+    height: 100%;
+    div.row {
+        height: 100%;
+    }
+}
 table {
     width: 100%;
 }
@@ -55,6 +85,14 @@ div.date {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
+}
+h5 {
+    margin-top: 10px;
+}
+span.mealType {
+    display: inline-block;
+    text-align: right;
+    width: 80px;
 }
 
 /* Recipes page */
@@ -75,11 +113,83 @@ div#view-recipe {
 }
 
 /* Pantry page */
-div.container.add-ingredients {
-    form div.row {
-        div.inline-field {
-            padding: 0 5px;
-            margin-top: 10px;
-        }
+div.ingredient {
+    position: relative;
+    height: 70px;
+    div.name, div.info {
+        position: absolute;
+    }
+    div.info {
+        right: 15px;
+    }
+}
+
+/* Add ingredient page */
+form div.row {
+    div.inline-field {
+        padding: 0 5px;
+        margin-top: 10px;
+    }
+}
+
+/* Add recipe page */
+div.add.name {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    input {
+        font-size: 30px;
+    }
+}
+label.upload {
+    margin-bottom: 20px;
+}
+input.ingredient, textarea.direction {
+    display: inline-block;
+    padding-right: 35px;
+}
+textarea.direction {
+    font: inherit;
+    vertical-align: top;
+}
+li.add {
+    position: relative;
+    &:not(:last-child) {
+        margin-bottom: 10px;
+    }
+}
+label.upload {
+    &:hover {
+        cursor: pointer;
+    }
+    img {
+        width: 40px;
+    }
+}
+div.add-button {
+    position: absolute;
+    right: 9px;
+    top: -7px;
+    width: 48px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+div.delete {
+    right: -5px;
+    position: absolute;
+    top: -5px;
+    width: 48px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+button.submit {
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 30px;
+    &:hover {
+        background-color: rgba(0,0,0,0.3);
+        color: white;
+        cursor: pointer;
     }
 }

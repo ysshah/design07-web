@@ -6,10 +6,12 @@ from . import views
 urlpatterns = [
     url(r'^$', RedirectView.as_view(pattern_name='calendar', permanent=False)),
     url(r'^calendar/$', views.calendar, name='calendar'),
+    url(r'^calendar/add/$', views.calendar_add, name='calendar_add'),
     url(r'^recipes/$', views.recipes, name='recipes'),
-    url(r'^recipes/add/$', views.add_recipes, name='add_recipes'),
+    url(r'^recipes/add/$', views.recipes_add, name='recipes_add'),
+    url(r'^recipes/(?P<recipe_name>.+)/$', views.recipes, name='recipes'),
     url(r'^pantry/$', views.pantry, name='pantry'),
-    url(r'^pantry/add/$', views.add_ingredients, name='add_ingredients'),
+    url(r'^pantry/add/$', views.pantry_add, name='pantry_add'),
 
     # Ajax
     url(r'^view-recipe/$', views.view_recipe, name='view-recipe'),

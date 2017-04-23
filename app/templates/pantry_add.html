@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3 class="text-center">Add Ingredients</h3>
+<div class="container add-ingredients">
+    <form>
+        <div class="row">
+            <div class="col-6 col-md-5 col-xl-6 inline-field">Name</div>
+            <div class="col-6 col-md-3 col-xl-2 inline-field">Expiration Date</div>
+            <div class="hidden-sm-down col-md-2 inline-field">Quantity</div>
+            <div class="hidden-sm-down col-md-2 inline-field">Unit</div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-5 col-xl-6 inline-field">
+                <input class="form-control" type="text" name="ingredients[]" placeholder="Enter ingredient">
+            </div>
+            <div class="col-6 col-md-3 col-xl-2 inline-field">
+                <input class="form-control" type="date" name="dates[]">
+            </div>
+            <div class="col-6 col-md-2 inline-field">
+                <input class="form-control" type="number" name="ingredients[]" placeholder="Quantity">
+            </div>
+            <div class="col-6 col-md-2 inline-field">
+                <select class="form-control">
+                    <option>ounces</option>
+                    <option>cups</option>
+                    <option>quarts</option>
+                    <option>gallons</option>
+                    <option>pounds</option>
+                    <option>grams</option>
+                    <option>kilograms</option>
+                </select>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn submit">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function() {
+
+
+
+});
+</script>
+{% endblock script %}

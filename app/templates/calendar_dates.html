@@ -1,7 +1,8 @@
+{% load static %}
 <div class="text-center">
-    <button data-ym="{{ prev }}">Prev</button>
+    <img class="icon-fixed float-left" src="{% static 'icons/left_arrow.svg' %}" data-ym="{{ prev }}">
     <span>{{ month_year }}</span>
-    <button data-ym="{{ next }}">Next</button>
+    <img class="icon-fixed float-right" src="{% static 'icons/right_arrow.svg' %}" data-ym="{{ next }}">
 </div>
 <table>
     <thead>

@@ -3,10 +3,9 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-6" id="dates">
-        </div>
-        <div class="col-6" id="mealplan">
-        {% include "view_mealplan.html" %}
+        <div class="col-md-6" id="dates"></div>
+        <div class="col-md-6" id="mealplan">
+        {% include "calendar_mealplan.html" %}
         </div>
     </div>
 </div>
@@ -18,9 +17,21 @@ $(document).ready(function() {
 
     $('#dates').load("{% url 'calendar-dates' %}", {'ym': '2017-04'});
 
-    $('#dates').on('click', 'button', function() {
+    $('#dates').on('click', 'img', function() {
         var data = {'ym': $(this).data('ym')};
         $('#dates').load("{% url 'calendar-dates' %}", data);
+    });
+
+    var toggled = false;
+    $('#sort_or_down').click(function() {
+        $("#dates").slideToggle();
+        if (toggled) {
+            toggled = false;
+            $('#sort_or_down img').css({'transform': 'rotate(0deg)'});
+        } else {
+            toggled = true;
+            $('#sort_or_down img').css({'transform': 'rotate(180deg)'});
+        }
     });
 
 });

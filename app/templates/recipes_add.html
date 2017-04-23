@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<form action="{% url 'recipes_add' %}" method="post">
+<div class="container add">
+    <div class="row">
+        <div class="col-8 push-2 add name">
+            <input class="form-control" type="text" name="RecipeName" placeholder="Enter recipe name">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <label class="upload" for="files">
+                <img class="upload" src="{% static 'icons/camera.svg' %}">
+                <span>Upload an Image</span>
+            </label>
+            <input id="files" style="display:none;" type="file">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h5>Ingredients</h5>
+            <div class="add-button ingredient">
+                <img src="{% static 'icons/plus_black.svg' %}">
+            </div>
+            <ul>
+                <li class="add">
+                    <input class="form-control ingredient" type="text" name="Ingredients[]" placeholder="Enter ingredient">
+                    <div class="delete">
+                        <img src="{% static 'icons/cross.svg' %}">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-6">
+            <h5>Directions</h5>
+            <div class="add-button direction">
+                <img src="{% static 'icons/plus_black.svg' %}">
+            </div>
+            <ol>
+                <li class="add direction">
+                    <textarea class="form-control direction" name="Directions[]" placeholder="Enter direction"></textarea>
+                    <div class="delete">
+                        <img src="{% static 'icons/cross.svg' %}">
+                    </div>
+                </li>
+            </ol>
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn submit">Submit</button>
+        </div>
+        {% csrf_token %}
+    </div>
+</div>
+</form>
+{% endblock content %}
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $('div.add-button').click(function() {
+        if ($(this).hasClass('ingredient')) {
+            var li = $('ul li').last().clone();
+            li.children('input').val('');
+            li.appendTo('ul');
+        } else {
+            var li = $('ol li').last().clone();
+            li.children('textarea').val('');
+            li.children('textarea').removeAttr('style');
+            li.appendTo('ol');
+        }
+    });
+
+    $('ul,ol').on('click', 'div.delete', function() {
+        if ($(this).parent().siblings().length == 0) {
+            $(this).siblings('input, textarea').val('');
+        } else {
+            $(this).parent().remove();
+        }
+    });
+
+    $('input[name=RecipeName]').keypress(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+        }
+    });
+
+    $('ul').on('keypress', 'input', function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            var li = $(this).parent().clone();
+            li.insertAfter($(this).parent());
+            var input = li.children('input');
+            input.val('');
+            input.focus();
+        }
+    });
+
+    $('ol').on('keypress', 'textarea', function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            var li = $(this).parent().clone();
+            li.insertAfter($(this).parent());
+            var textarea = li.children('textarea');
+            textarea.val('');
+            textarea.removeAttr('style');
+            textarea.focus();
+        }
+    });
+
+    $('ul').on('keydown', 'input', function(e) {
+        if (e.keyCode == 8) {
+            if ($(this).val() == '' && $(this).parent().siblings().length != 0) {
+                e.preventDefault();
+                $(this).parent().prev().children('input').focus();
+                $(this).parent().remove();
+            }
+        }
+    });
+
+    $('ol').on('keydown', 'textarea', function(e) {
+        if (e.keyCode == 8) {
+            if ($(this).val() == '' && $(this).parent().siblings().length != 0) {
+                e.preventDefault();
+                $(this).parent().prev().children('textarea').focus();
+                $(this).parent().remove();
+            }
+        }
+    });
+
+});
+</script>
+{% endblock script %}

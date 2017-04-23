@@ -7,9 +7,12 @@ from django.shortcuts import render
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 recipesTable = dynamodb.Table('CookSmartRecipes')
 calendarTable = dynamodb.Table('CookSmartCalendar')
-pantryTable = dynamodb.Table('CookSmartCalendar')
+pantryTable = dynamodb.Table('CookSmartPantry')
 
-cal = pycal.Calendar(6)
+CAL = pycal.Calendar(6)
+
+MEALTYPES = ['Breakfast', 'Lunch / Dinner', 'Dessert']
+YMD = '%Y-%m-%d'
 
 
 def incrMonthYear(year, month, delta=1):
@@ -22,9 +25,23 @@ def incrMonthYear(year, month, delta=1):
 
 def calendar(request):
     today = datetime.date.today()
-    day = datetime.timedelta(1)
+    oneday = datetime.timedelta(1)
+    dates = []
+    items = calendarTable.scan()['Items']
+    mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Dessert']
+    for i in range(7):
+        day = today + i*oneday
+        date = { 'date': day.strftime('%A, %B %d, %Y'), 'meals': [] }
+        for item in items:
+            if item['Date'] == day.strftime(YMD):
+                date['meals'].append((item['MealType'], item['RecipeName']))
+        dates.append(date)
+    for date in dates:
+        date['meals'] = sorted(date['meals'], key=lambda x: mealTypes.index(x[0]))
+
     context = {
-        'dates': [(today + day*i).strftime('%A, %B %d, %Y') for i in range(7)]
+        'dates': dates,
+        'calendar_selected': 'selected'
     }
     return render(request, 'calendar.html', context)
 
@@ -36,45 +53,67 @@ def calendar_dates(request):
         'month_year': date.strftime('%B %Y'),
         'prev': '{}-{:02d}'.format(*incrMonthYear(date.year, date.month, -1)),
         'next': '{}-{:02d}'.format(*incrMonthYear(date.year, date.month, 1)),
-        'days': cal.monthdayscalendar(date.year, date.month)
+        'days': CAL.monthdayscalendar(date.year, date.month)
     }
     return render(request, 'calendar_dates.html', context)
 
 
+def calendar_add(request):
+    context = {
+        'today': datetime.date.today().strftime(YMD)
+    }
+    return render(request, 'calendar_add.html', context)
+
+
 def view_mealplan(request):
-    return render(request, 'view_mealplan.html')
+    return render(request, 'calendar_mealplan.html')
 
 
-def recipes(request):
+def recipes(request, recipe_name=None):
     items = recipesTable.scan()['Items']
     mealTypes = []
-    for mealType in ['Breakfast', 'Lunch / Dinner']:
+    for mealType in MEALTYPES:
         mealTypes.append(
             (mealType, [r for r in items if r['MealType'] == mealType])
         )
+    query = list(filter(lambda x: x['RecipeName'] == recipe_name, items))
+    if query:
+        thisRecipe = query[0]
+    else:
+        thisRecipe = mealTypes[0][1][0]
     context = {
         'mealTypes': mealTypes,
-        'thisRecipe': splitByNewline(mealTypes[0][1][0])
+        'thisRecipe': splitByNewline(thisRecipe),
+        'recipes_selected': 'selected'
     }
     return render(request, 'recipes.html', context)
 
 
-def add_recipes(request):
-    return render(request, 'add_recipes.html')
+def recipes_add(request):
+    return render(request, 'recipes_add.html')
 
 
 def pantry(request):
-    return render(request, 'pantry.html')
+    items = pantryTable.scan()['Items']
+    today = datetime.datetime.today()
+    for item in items:
+        exp = datetime.datetime.strptime(item['ExpirationDate'], YMD)
+        item['DaysLeft'] = (exp - today).days
+    context = {
+        'items': items,
+        'pantry_selected': 'selected'
+    }
+    return render(request, 'pantry.html', context)
 
 
-def add_ingredients(request):
-    return render(request, 'add_ingredients.html')
+def pantry_add(request):
+    return render(request, 'pantry_add.html')
 
 
 def view_recipe(request):
     query = recipesTable.get_item(Key={'RecipeName': request.POST['name']})
     context = {'thisRecipe': splitByNewline(query['Item'])}
-    return render(request, 'view_recipe.html', context)
+    return render(request, 'recipes_view.html', context)
 
 
 def splitByNewline(recipe):

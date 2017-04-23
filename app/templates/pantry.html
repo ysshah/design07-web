@@ -2,6 +2,16 @@
 
 {% block content %}
 <div class="container">
-    <div class="row"></div>
+    <div class="row">
+    {% for item in items %}
+        <div class="col-sm-6 col-lg-4 ingredient">
+            <div class="name">{{ item.IngredientName }}</div>
+            <div class="info text-center">
+                <div>{{ item.IngredientAmount }} {{ item.IngredientUnit }}</div>
+                <div>{{ item.DaysLeft }} days left</div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 </div>
 {% endblock content %}

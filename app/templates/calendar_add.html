@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="text-center">Add Meals to Meal Plan</h3>
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-6 col-md-3 inline-field">Date</div>
+            <div class="col-6 col-md-3 inline-field">Meal</div>
+            <div class="hidden-sm-down col-md-6 inline-field">Recipe</div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-3 inline-field">
+                <input class="form-control" type="date" name="dates[]" value="{{ today }}">
+            </div>
+            <div class="col-6 col-md-3 inline-field">
+                <select class="form-control">
+                    <option>Breakfast</option>
+                    <option>Lunch</option>
+                    <option>Dinner</option>
+                    <option>Dessert</option>
+                </select>
+            </div>
+            <div class="col-md-6 inline-field">
+                <input class="form-control" type="text" name="recipes[]">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
