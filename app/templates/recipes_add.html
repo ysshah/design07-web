@@ -3,17 +3,28 @@
 {% block content %}
 <form action="{% url 'recipes_add' %}" method="post">
 <div class="container add">
+    <h3 class="text-center">Add New Recipe</h3>
     <div class="row">
-        <div class="col-md-8 push-md-2 add name">
+        <div class="col-8">
+            <div>Recipe Name</div>
             <input class="form-control" type="text" name="RecipeName" placeholder="Enter recipe name">
         </div>
-    </div>
-    <div class="text-center">
-        <label class="upload" for="files">
-            <img class="upload" src="{% static 'icons/camera.svg' %}">
-            <span>Upload an Image</span>
-        </label>
-        <input id="files" style="display:none;" type="file">
+        <div class="col-2">
+            <div>Meal type</div>
+            <select class="form-control" name="MealType">
+                <option>Breakfast</option>
+                <option>Lunch</option>
+                <option>Dinner</option>
+                <option>Dessert</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <label class="upload" for="files">
+                <img class="upload" src="{% static 'icons/camera.svg' %}">
+                <span>Upload an Image</span>
+            </label>
+            <input id="files" style="display:none;" type="file">
+        </div>
     </div>
     <div class="row">
         <div class="col-md-6">

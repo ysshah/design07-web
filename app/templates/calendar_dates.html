@@ -1,8 +1,8 @@
 {% load static %}
 <div class="text-center">
-    <img class="icon float-left" src="{% static 'icons/left_arrow.svg' %}" data-ym="{{ prev }}">
+    <img class="icon float-left month-arrow" src="{% static 'icons/left_arrow.svg' %}" data-ym="{{ prev }}">
     <span style="line-height:32px;">{{ month_year }}</span>
-    <img class="icon float-right" src="{% static 'icons/right_arrow.svg' %}" data-ym="{{ next }}">
+    <img class="icon float-right month-arrow" src="{% static 'icons/right_arrow.svg' %}" data-ym="{{ next }}">
 </div>
 <table>
     <thead>

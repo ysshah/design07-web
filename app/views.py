@@ -2,7 +2,7 @@ import calendar as pycal
 import datetime
 import boto3
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 recipesTable = dynamodb.Table('CookSmartRecipes')
@@ -59,8 +59,23 @@ def calendar_dates(request):
 
 
 def calendar_add(request):
+    if request.method == 'POST':
+        recipes = request.POST.getlist('recipes[]')
+        dates = request.POST.getlist('dates[]')
+        mealtypes = request.POST.getlist('mealtypes[]')
+        for i, recipe in enumerate(recipes):
+            if dates[i] and mealtypes[i]:
+                item = {
+                    'RecipeName': recipe,
+                    'Date': dates[i],
+                    'MealType': mealtypes[i]
+                }
+                calendarTable.put_item(Item=item)
+                return redirect('calendar')
+
     context = {
-        'today': datetime.date.today().strftime(YMD)
+        'today': datetime.date.today().strftime(YMD),
+        'recipes': [r['RecipeName'] for r in recipesTable.scan()['Items']]
     }
     return render(request, 'calendar_add.html', context)
 
@@ -69,7 +84,7 @@ def view_mealplan(request):
     return render(request, 'calendar_mealplan.html')
 
 
-def recipes(request, recipe_name=None):
+def recipes(request):
     items = recipesTable.scan()['Items']
     mealTypes = []
     for mealType in MEALTYPES:
@@ -84,10 +99,28 @@ def recipes(request, recipe_name=None):
 
 
 def recipes_add(request):
-    return render(request, 'recipes_add.html')
+    if request.method == 'POST':
+        recipe_name = request.POST['RecipeName']
+        ingredients = [i for i in request.POST.getlist('Ingredients[]') if i]
+        directions = [d for d in request.POST.getlist('Directions[]') if d]
+        if recipe_name and ingredients:
+            item = {
+                'RecipeName': recipe_name,
+                'IngredientsList': '\n'.join(ingredients),
+                'MealType': request.POST['MealType']
+            }
+            if directions:
+                item['PrepDirections'] = '\n'.join(directions)
+            recipesTable.put_item(Item=item)
+            return redirect('view_recipe', recipe_name=recipe_name)
+    return render(request, 'recipes_add.html', {'page_title': 'Add Recipe | '})
 
 
 def view_recipe(request, recipe_name):
+    if request.method == 'POST':
+        recipesTable.delete_item(Key={'RecipeName': recipe_name})
+        return redirect('recipes')
+
     query = recipesTable.get_item(Key={'RecipeName': recipe_name})
     if 'Item' in query:
         context = {
@@ -99,6 +132,22 @@ def view_recipe(request, recipe_name):
 
 
 def pantry(request):
+    if request.method == 'POST':
+        ingredients = request.POST.getlist('ingredients[]')
+        dates = request.POST.getlist('dates[]')
+        quantities = request.POST.getlist('quantities[]')
+        units = request.POST.getlist('units[]')
+        for i, ingredient in enumerate(ingredients):
+            if ingredient and dates[i] and quantities[i]:
+                item = {
+                    'IngredientName': ingredient,
+                    'ExpirationDate': dates[i],
+                    'IngredientAmount': quantities[i],
+                }
+                if units[i]:
+                    item['IngredientUnit'] = units[i]
+                pantryTable.put_item(Item=item)
+
     items = pantryTable.scan()['Items']
     today = datetime.datetime.today()
     for item in items:

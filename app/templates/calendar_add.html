@@ -1,29 +1,70 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-<h3 class="text-center">Add Meals to Meal Plan</h3>
-<div class="container">
-    <form>
+
+<div class="container add-ingredients">
+    <h3 class="text-center">Add Meal to Meal Plan</h3>
+    <img id="add" src="{% static 'icons/plus_black.svg' %}">
+    <form action="{% url 'calendar_add' %}" method="post">
         <div class="row">
-            <div class="col-6 col-md-3 inline-field">Date</div>
-            <div class="col-6 col-md-3 inline-field">Meal</div>
-            <div class="hidden-sm-down col-md-6 inline-field">Recipe</div>
+            <div class="col-3 inline-field">Date</div>
+            <div class="col-3 inline-field">Meal</div>
+            <div class="col-6 inline-field">Recipe</div>
         </div>
-        <div class="row">
-            <div class="col-6 col-md-3 inline-field">
-                <input class="form-control" type="date" name="dates[]" value="{{ today }}">
+        <div id="inputs">
+            <div class="row">
+                <div class="col-3 inline-field">
+                    <input class="form-control add-ingredients" type="date" name="dates[]">
+                </div>
+                <div class="col-3 inline-field">
+                    <select class="form-control add-ingredients" name="mealtypes[]">
+                        <option>Breakfast</option>
+                        <option>Lunch</option>
+                        <option>Dinner</option>
+                        <option>Dessert</option>
+                    </select>
+                </div>
+                <div class="col-5 inline-field">
+                    <input class="form-control add-ingredients input-recipe" type="text" name="recipes[]" placeholder="Recipe" autocomplete="off">
+                </div>
+                <div class="col-1 input-delete">
+                    <img src="{% static 'icons/cross.svg' %}">
+                </div>
             </div>
-            <div class="col-6 col-md-3 inline-field">
-                <select class="form-control">
-                    <option>Breakfast</option>
-                    <option>Lunch</option>
-                    <option>Dinner</option>
-                    <option>Dessert</option>
-                </select>
-            </div>
-            <div class="col-md-6 inline-field">
-                <input class="form-control" type="text" name="recipes[]">
-            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn submit">Submit</button>
         </div>
     </form>
 </div>
 {% endblock content %}
+{% block script %}
+<script src="{% static 'bootstrap3-typeahead.min.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    var recipes = [];
+    {% for recipe in recipes %}
+    recipes.push("{{ recipe }}");
+    {% endfor %}
+
+    $("input.input-recipe").typeahead({ source: recipes });
+
+    $('img#add').click(function() {
+        var row = $('div#inputs .row').last().clone();
+        row.find('input').val('');
+        row.appendTo('div#inputs');
+        row.find('input.input-recipe').typeahead({ source: recipes });
+    });
+
+    $('div#inputs').on('click', 'div.input-delete', function() {
+        if ($(this).parent().siblings().length == 0) {
+            $(this).siblings().children('input').val('');
+        } else {
+            $(this).parent().remove();
+        }
+    });
+
+});
+</script>
+{% endblock script %}

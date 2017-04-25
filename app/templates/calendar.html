@@ -22,17 +22,7 @@ $(document).ready(function() {
         $('#dates').load("{% url 'calendar-dates' %}", data);
     });
 
-    var toggled = false;
-    $('#sort_or_down').click(function() {
-        $("#dates").slideToggle();
-        if (toggled) {
-            toggled = false;
-            $('#sort_or_down img').css({'transform': 'rotate(0deg)'});
-        } else {
-            toggled = true;
-            $('#sort_or_down img').css({'transform': 'rotate(180deg)'});
-        }
-    });
+    // $('[data-toggle="tooltip"]').tooltip('show');
 
 });
 </script>

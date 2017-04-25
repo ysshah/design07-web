@@ -15,30 +15,31 @@
         <div class="top-nav fixed-top">
             <div class="container">
                 <div class="row">
-                    <div class="col-4 middle" id="sort_or_down">
-                    {% if calendar_selected %}
-                        <img class="icon in-nav hidden-md-up" src="{% static 'icons/down_arrow.svg' %}">
-                    {% elif recipes_selected or pantry_selected %}
+                    {% if recipes_selected or pantry_selected %}
+                    <div class="middle" id="sort_or_down" data-toggle="tooltip" data-trigger="manual" data-placement="right" title="Tap here to sort!">
                         <img class="icon in-nav" src="{% static 'icons/down_up.svg' %}">
-                    {% endif %}
                     </div>
-                    <a href="{% url 'calendar' %}" class="col-4 text-center middle navbar-link">
+                    {% else %}
+                    <div class="middle" id="sort_or_down"></div>
+                    {% endif %}
+
+                    <a href="{% url 'calendar' %}" class="push-4 col-4 text-center middle navbar-link">
                         <div>CookSmart</div>
                     </a>
                     {% if calendar_selected %}
-                        <a href="{% url 'calendar_add' %}" class="col-4 text-right navbar-link">
+                        <a href="{% url 'calendar_add' %}" id="nav-add-meal" class="text-right navbar-link" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Tap here to add a meal to your mealplan!">
                             <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
                             <div>Add Meal</div>
                         </a>
                     {% elif recipes_selected %}
-                        <a href="{% url 'recipes_add' %}" class="col-4 text-right navbar-link">
+                        <a href="{% url 'recipes_add' %}" id="nav-add-recipe" class="text-right navbar-link" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Tap here to add a new recipe to your collection!">
                             <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
                             <div>Add Recipe</div>
                         </a>
                     {% elif pantry_selected %}
-                        <a href="{% url 'pantry_add' %}" class="col-4 text-right navbar-link">
+                        <a href="{% url 'pantry_add' %}" id="nav-add-ingredients" class="text-right navbar-link" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Tap here to add ingredients to your pantry!">
                             <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
-                            <div>Add Ingredient</div>
+                            <div>Add Ingredients</div>
                         </a>
                     {% endif %}
                 </div>

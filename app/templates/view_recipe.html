@@ -27,9 +27,8 @@
         </div>
     </div>
     <div class="row">
-        <form class="delete" method="post">
+        <form class="delete" action="{% url 'view_recipe' recipe.RecipeName %}" method="post">
             <button type="submit" class="btn submit">Delete Recipe</button>
-            {% csrf_token %}
         </form>
     </div>
 </div>
