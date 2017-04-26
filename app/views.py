@@ -132,14 +132,21 @@ def view_recipe(request, recipe_name):
 
 
 def pantry(request):
+    categories = ['Fruits', 'Vegetables', 'Dairy', 'Spices', 'Meats']
     items = pantryTable.scan()['Items']
+    ingredients = {}
     today = datetime.datetime.today()
     for item in items:
         exp = datetime.datetime.strptime(item['ExpirationDate'], YMD)
         item['DaysLeft'] = (exp - today).days
+        if item['Category'] in ingredients:
+            ingredients[item['Category']].append(item)
+        else:
+            ingredients[item['Category']] = [item]
+
     context = {
-        'items': items,
-        'pantry_selected': 'selected'
+        'ingredients': ingredients,
+        'pantry_selected': 'selected',
     }
     return render(request, 'pantry.html', context)
 
@@ -147,6 +154,7 @@ def pantry(request):
 def pantry_add(request):
     if request.method == 'POST':
         ingredients = request.POST.getlist('ingredients[]')
+        categories = request.POST.getlist('categories[]')
         dates = request.POST.getlist('dates[]')
         quantities = request.POST.getlist('quantities[]')
         units = request.POST.getlist('units[]')
@@ -156,6 +164,7 @@ def pantry_add(request):
                     'IngredientName': ingredient,
                     'ExpirationDate': dates[i],
                     'IngredientAmount': quantities[i],
+                    'Category': categories[i],
                 }
                 if units[i]:
                     item['IngredientUnit'] = units[i]

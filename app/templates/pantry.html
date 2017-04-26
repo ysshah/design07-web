@@ -1,15 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container pantry">
     <div class="row">
-    {% for item in items %}
-        <div class="col-sm-6 col-lg-4 ingredient">
-            <div class="name">{{ item.IngredientName }}</div>
-            <div class="info text-center">
-                <div>{{ item.IngredientAmount }} {{ item.IngredientUnit }}</div>
-                <div>{{ item.DaysLeft }} days left</div>
+    {% for category, items in ingredients.items %}
+        <div class="col-4 category">
+            <h5 class="category">{{ category }}</h5>
+        {% for item in items %}
+            <div class="ingredient d-flex align-items-center">
+                <div class="name">{{ item.IngredientName }}</div>
+                <div class="info text-right">
+                    <div>{{ item.IngredientAmount }} {{ item.IngredientUnit }} left</div>
+                    <div>{{ item.DaysLeft }} days left</div>
+                </div>
             </div>
+        {% endfor %}
         </div>
     {% endfor %}
     </div>

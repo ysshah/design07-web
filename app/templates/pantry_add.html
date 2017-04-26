@@ -7,15 +7,25 @@
     <img id="add" src="{% static 'icons/plus_black.svg' %}">
     <form action="{% url 'pantry_add' %}" method="post">
         <div class="row">
-            <div class="col-5 inline-field">Name</div>
+            <div class="col-3 inline-field">Name</div>
+            <div class="col-2 inline-field">Category</div>
             <div class="col-2 inline-field">Expiration Date</div>
             <div class="col-2 inline-field">Quantity</div>
             <div class="col-2 inline-field">Unit</div>
         </div>
         <div id="inputs">
             <div class="row">
-                <div class="col-5 inline-field">
+                <div class="col-3 inline-field">
                     <input class="form-control add-ingredients" type="text" name="ingredients[]" placeholder="Enter ingredient">
+                </div>
+                <div class="col-2 inline-field">
+                    <select class="form-control add-ingredients" name="categories[]">
+                        <option>Dairy</option>
+                        <option>Fruits</option>
+                        <option>Vegetables</option>
+                        <option>Spices</option>
+                        <option>Meats</option>
+                    </select>
                 </div>
                 <div class="col-2 inline-field">
                     <input class="form-control add-ingredients" type="date" name="dates[]">

@@ -184,14 +184,31 @@ div.recipe-image {
 }
 
 /* Pantry page */
-div.ingredient {
-    position: relative;
-    height: 70px;
-    div.name, div.info {
-        position: absolute;
-    }
-    div.info {
-        right: 15px;
+div.container.pantry {
+    div.category {
+        border-right: 1px solid black;
+        &:nth-child(3n) {
+            border-right: none;
+        }
+        h5 {
+            background-color: $primary-color-light;
+            padding: 8px;
+        }
+        div.ingredient {
+            position: relative;
+            height: 48px;
+            margin-bottom: 20px;
+            div.name, div.info {
+                position: absolute;
+            }
+            div.name {
+                font-weight: bold;
+                left: 15px;
+            }
+            div.info {
+                right: 15px;
+            }
+        }
     }
 }
 
