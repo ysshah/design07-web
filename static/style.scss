@@ -1,4 +1,6 @@
 $primary-color: #f2994a;
+$primary-color-light: #f7c191;
+$black-light: #555;
 
 body {
     font-family: 'Josefin Sans', sans-serif;
@@ -14,7 +16,8 @@ select.add-ingredients.form-control {
 }
 a {
     color: black;
-    &:hover {
+    &:hover, &:focus {
+        color: black;
         text-decoration: none;
     }
 }
@@ -71,34 +74,71 @@ div.recipes.container {
         height: 100%;
     }
 }
-img.month-arrow {
+div#dates {
+    div#calendar-header {
+        position: relative;
+        img.month-arrow {
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            &.left {
+                left: 0;
+            }
+            &.right {
+                right: 0;
+            }
+        }
+    }
+    table {
+        width: 100%;
+        th, td {
+            border: 1px solid #f7c192;
+            height: 60px;
+            text-align: center;
+            width: 1 / 7 * 100%;
+        }
+        td.valid:hover {
+            background-color: $primary-color;
+            cursor: pointer;
+        }
+    }
+}
+div#mealplan {
+    h5 {
+        background-color: $primary-color-light;
+        margin-bottom: 0;
+        margin-top: 10px;
+        padding: 8px;
+    }
+    div.date {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    div.mealType {
+        border-right: 1px solid $black-light;
+        display: inline-block;
+        font-weight: bold;
+        line-height: 40px;
+        padding-right: 10px;
+        text-align: right;
+        width: 100px;
+    }
+    a.meal {
+        color: $black-light;
+        padding-left: 4px;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+/* Add Page */
+div.input-delete {
     cursor: pointer;
 }
-table {
-    width: 100%;
-}
-th, td {
-    border: 1px solid #f7c192;
-    height: 60px;
-    text-align: center;
-    width: 1 / 7 * 100%;
-}
-td.valid:hover {
-    background-color: $primary-color;
+img#add {
     cursor: pointer;
-}
-div.date {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-h5 {
-    margin-top: 10px;
-}
-span.mealType {
-    display: inline-block;
-    text-align: right;
-    width: 80px;
 }
 
 /* Recipes page */
@@ -136,6 +176,11 @@ div#view-recipe {
             width: 100%;
         }
     }
+}
+
+/* View Recipe Page */
+div.recipe-image {
+    margin-bottom: 20px;
 }
 
 /* Pantry page */

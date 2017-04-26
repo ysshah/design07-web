@@ -5,14 +5,14 @@
 <div class="container add-ingredients">
     <h3 class="text-center">Add Ingredients</h3>
     <img id="add" src="{% static 'icons/plus_black.svg' %}">
-    <form action="{% url 'pantry' %}" method="post">
+    <form action="{% url 'pantry_add' %}" method="post">
+        <div class="row">
+            <div class="col-5 inline-field">Name</div>
+            <div class="col-2 inline-field">Expiration Date</div>
+            <div class="col-2 inline-field">Quantity</div>
+            <div class="col-2 inline-field">Unit</div>
+        </div>
         <div id="inputs">
-            <div class="row">
-                <div class="col-5 inline-field">Name</div>
-                <div class="col-2 inline-field">Expiration Date</div>
-                <div class="col-2 inline-field">Quantity</div>
-                <div class="col-2 inline-field">Unit</div>
-            </div>
             <div class="row">
                 <div class="col-5 inline-field">
                     <input class="form-control add-ingredients" type="text" name="ingredients[]" placeholder="Enter ingredient">
@@ -35,7 +35,7 @@
                         <option>kilograms</option>
                     </select>
                 </div>
-                <div class="col-1">
+                <div class="col-1 input-delete">
                     <img src="{% static 'icons/cross.svg' %}">
                 </div>
             </div>
@@ -54,6 +54,14 @@ $(document).ready(function() {
         var row = $('div#inputs .row').last().clone();
         row.find('input').val('');
         row.appendTo('div#inputs');
+    });
+
+    $('div#inputs').on('click', 'div.input-delete', function() {
+        if ($(this).parent().siblings().length == 0) {
+            $(this).siblings().children('input').val('');
+        } else {
+            $(this).parent().remove();
+        }
     });
 
 });
