@@ -12,64 +12,90 @@
         <link rel="stylesheet" href="{% static 'style.css' %}">
     </head>
     <body>
+        <div id="sidebar">
+            <a href="{% url 'calendar' %}">
+                <img class="icon" src="{% static 'icons/calendar.svg' %}">
+                <span>Calendar</span>
+            </a>
+            <a href="{% url 'recipes' %}">
+                <img class="icon" src="{% static 'icons/chef.svg' %}">
+                <span>Recipes</span>
+            </a>
+            <a href="{% url 'pantry' %}">
+                <img class="icon" src="{% static 'icons/list.svg' %}">
+                <span>Pantry</span>
+            </a>
+            <a>
+                <img class="icon" src="{% static 'icons/plus_white.svg' %}">
+                <span>Add</span>
+            </a>
+        </div>
+        <div id="black-cover"></div>
         <div class="top-nav fixed-top">
             <div class="container">
                 <div class="row">
-                    {% if recipes_selected or pantry_selected %}
+                {% if recipes_selected or pantry_selected %}
                     <div class="middle" id="sort_or_down" data-toggle="tooltip" data-trigger="manual" data-placement="right" title="Tap here to sort!">
                         <img class="icon in-nav" src="{% static 'icons/down_up.svg' %}">
                     </div>
-                    {% else %}
+                {% else %}
                     <div class="middle" id="sort_or_down"></div>
-                    {% endif %}
-
+                {% endif %}
+                    <div id="menu">
+                        <img width="50px" src="{% static 'icons/menu.svg' %}">
+                    </div>
                     <a href="{% url 'calendar' %}" class="push-4 col-4 text-center middle navbar-link">
                         <div>CookSmart</div>
                     </a>
-                    {% if calendar_selected %}
-                        <a href="{% url 'calendar_add' %}" id="nav-add-meal" class="text-right navbar-link" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Tap here to add a meal to your mealplan!">
-                            <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
-                            <div>Add Meal</div>
-                        </a>
-                    {% elif recipes_selected %}
-                        <a href="{% url 'recipes_add' %}" id="nav-add-recipe" class="text-right navbar-link" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Tap here to add a new recipe to your collection!">
-                            <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
-                            <div>Add Recipe</div>
-                        </a>
-                    {% elif pantry_selected %}
-                        <a href="{% url 'pantry_add' %}" id="nav-add-ingredients" class="text-right navbar-link" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Tap here to add ingredients to your pantry!">
-                            <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
-                            <div>Add Ingredients</div>
-                        </a>
-                    {% endif %}
+                {% if calendar_selected %}
+                    <a href="{% url 'calendar_add' %}" id="nav-add-meal" class="text-right navbar-link" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Tap here to add a meal to your mealplan!">
+                        <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
+                        <div>Add Meal</div>
+                    </a>
+                {% elif recipes_selected %}
+                    <a href="{% url 'recipes_add' %}" id="nav-add-recipe" class="text-right navbar-link" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Tap here to add a new recipe to your collection!">
+                        <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
+                        <div>Add Recipe</div>
+                    </a>
+                {% elif pantry_selected %}
+                    <a href="{% url 'pantry_add' %}" id="nav-add-ingredients" class="text-right navbar-link" data-toggle="tooltip" data-trigger="manual" data-placement="left" title="Tap here to add ingredients to your pantry!">
+                        <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
+                        <div>Add Ingredients</div>
+                    </a>
+                {% endif %}
                 </div>
             </div>
         </div>
         <div class="content">
-        {% block content %}{% endblock content %}
-        </div>
-        <div class="bottom-nav fixed-bottom">
-            <div class="container">
+        {% if recipes_selected or pantry_selected %}
+            <div class="container search">
                 <div class="row">
-                    <a href="{% url 'calendar' %}" class="col-4 text-center navbar-link {{calendar_selected}}">
-                        <img class="icon in-nav" src="{% static 'icons/calendar.svg' %}">
-                        <div>Calendar</div>
-                    </a>
-                    <a href="{% url 'recipes' %}" class="col-4 text-center navbar-link {{recipes_selected}}">
-                        <img class="icon in-nav" src="{% static 'icons/chef.svg' %}">
-                        <div>Recipes</div>
-                    </a>
-                    <a href="{% url 'pantry' %}" class="col-4 text-center navbar-link {{pantry_selected}}">
-                        <img class="icon in-nav" src="{% static 'icons/list.svg' %}">
-                        <div>Pantry</div>
-                    </a>
+                    <div class="col-6 push-3">
+                        <input type="text" name="search" class="form-control">
+                    </div>
                 </div>
             </div>
+        {% endif %}
+        {% block content %}{% endblock content %}
         </div>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-        <script src="{% static 'script.js' %}"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('#menu').click(function() {
+                $('#black-cover').fadeIn();
+                $("#sidebar").animate({left: '0'});
+            });
+
+            $('#black-cover').click(function() {
+                $('#black-cover').fadeOut();
+                $("#sidebar").animate({left: '-300px'});
+            });
+
+        });
+        </script>
         {% block script %}{% endblock script %}
     </body>
 </html>
