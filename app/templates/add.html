@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container tabs">
+    <div class="row">
+        <div class="col-4 text-center tab" data-id="#add-meals">Meals</div>
+        <div class="col-4 text-center tab" data-id="#add-recipe">Recipe</div>
+        <div class="col-4 text-center tab" data-id="#add-ingredients">Ingredients</div>
+    </div>
+</div>
+<div class="container add-ingredients tab-item" id="add-meals">
+    <h3 class="text-center">Add Meal to Meal Plan</h3>
+    <img id="add" src="{% static 'icons/plus_black.svg' %}">
+    <form action="{% url 'calendar_add' %}" method="post">
+        <div class="row">
+            <div class="col-3 inline-field">Date</div>
+            <div class="col-3 inline-field">Meal</div>
+            <div class="col-6 inline-field">Recipe</div>
+        </div>
+        <div id="inputs">
+            <div class="row">
+                <div class="col-3 inline-field">
+                    <input class="form-control add-ingredients" type="date" name="dates[]">
+                </div>
+                <div class="col-3 inline-field">
+                    <select class="form-control add-ingredients" name="mealtypes[]">
+                        <option>Breakfast</option>
+                        <option>Lunch</option>
+                        <option>Dinner</option>
+                        <option>Dessert</option>
+                    </select>
+                </div>
+                <div class="col-5 inline-field">
+                    <input class="form-control add-ingredients input-recipe" type="text" name="recipes[]" placeholder="Recipe" autocomplete="off">
+                </div>
+                <div class="col-1 input-delete">
+                    <img src="{% static 'icons/cross.svg' %}">
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn submit">Submit</button>
+        </div>
+    </form>
+</div>
+<form id="add-recipe" class="tab-item" action="{% url 'recipes_add' %}" method="post">
+    <div class="container add">
+        <h3 class="text-center">Add New Recipe</h3>
+        <div class="row">
+            <div class="col-8">
+                <div>Recipe Name</div>
+                <input class="form-control" type="text" name="RecipeName" placeholder="Enter recipe name">
+            </div>
+            <div class="col-2">
+                <div>Meal type</div>
+                <select class="form-control" name="MealType">
+                    <option>Breakfast</option>
+                    <option>Lunch</option>
+                    <option>Dinner</option>
+                    <option>Dessert</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <label class="upload" for="files">
+                    <img class="upload" src="{% static 'icons/camera.svg' %}">
+                    <span>Upload an Image</span>
+                </label>
+                <input id="files" style="display:none;" type="file">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Ingredients</h5>
+                <div class="add-button ingredient">
+                    <img src="{% static 'icons/plus_black.svg' %}">
+                </div>
+                <ul>
+                    <li class="add">
+                        <input class="form-control ingredient" type="text" name="Ingredients[]" placeholder="Enter ingredient">
+                        <div class="delete">
+                            <img src="{% static 'icons/cross.svg' %}">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h5>Directions</h5>
+                <div class="add-button direction">
+                    <img src="{% static 'icons/plus_black.svg' %}">
+                </div>
+                <ol>
+                    <li class="add direction">
+                        <textarea class="form-control direction" name="Directions[]" placeholder="Enter direction"></textarea>
+                        <div class="delete">
+                            <img src="{% static 'icons/cross.svg' %}">
+                        </div>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-12 text-center">
+                <button type="submit" class="btn submit">Submit</button>
+            </div>
+            {% csrf_token %}
+        </div>
+    </div>
+</form>
+<div id="add-ingredients" class="container add-ingredients tab-item">
+    <h3 class="text-center">Add Ingredients</h3>
+    <img id="add" src="{% static 'icons/plus_black.svg' %}">
+    <form action="{% url 'pantry_add' %}" method="post">
+        <div class="row">
+            <div class="col-3 inline-field">Name</div>
+            <div class="col-2 inline-field">Category</div>
+            <div class="col-2 inline-field">Expiration Date</div>
+            <div class="col-2 inline-field">Quantity</div>
+            <div class="col-2 inline-field">Unit</div>
+        </div>
+        <div id="inputs">
+            <div class="row">
+                <div class="col-3 inline-field">
+                    <input class="form-control add-ingredients" type="text" name="ingredients[]" placeholder="Enter ingredient">
+                </div>
+                <div class="col-2 inline-field">
+                    <select class="form-control add-ingredients" name="categories[]">
+                        <option>Dairy</option>
+                        <option>Fruits</option>
+                        <option>Vegetables</option>
+                        <option>Spices</option>
+                        <option>Nuts</option>
+                    </select>
+                </div>
+                <div class="col-2 inline-field">
+                    <input class="form-control add-ingredients" type="date" name="dates[]">
+                </div>
+                <div class="col-2 inline-field">
+                    <input class="form-control add-ingredients" type="number" name="quantities[]" placeholder="Quantity">
+                </div>
+                <div class="col-2 inline-field">
+                    <select class="form-control add-ingredients" name="units[]">
+                        <option></option>
+                        <option>ounces</option>
+                        <option>cups</option>
+                        <option>quarts</option>
+                        <option>gallons</option>
+                        <option>pounds</option>
+                        <option>grams</option>
+                        <option>kilograms</option>
+                    </select>
+                </div>
+                <div class="col-1 input-delete">
+                    <img src="{% static 'icons/cross.svg' %}">
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn submit">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+{% block script %}
+<script src="{% static 'bootstrap3-typeahead.min.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $('div.tab').click(function() {
+        $('.tab-item').hide();
+        $($(this).data('id')).show();
+    });
+
+    var recipes = [];
+    {% for recipe in recipes %}
+    recipes.push("{{ recipe }}");
+    {% endfor %}
+
+    $("input.input-recipe").typeahead({ source: recipes });
+
+    $('img#add').click(function() {
+        var inputs = $(this).next().children('#inputs');
+        var row = inputs.children('.row').last().clone();
+        row.find('input').val('');
+        row.appendTo(inputs);
+    });
+
+    $('div#inputs').on('click', 'div.input-delete', function() {
+        if ($(this).parent().siblings().length == 0) {
+            $(this).siblings().children('input').val('');
+        } else {
+            $(this).parent().remove();
+        }
+    });
+
+        $('div.add-button').click(function() {
+        if ($(this).hasClass('ingredient')) {
+            var li = $('ul li').last().clone();
+            li.children('input').val('');
+            li.appendTo('ul');
+        } else {
+            var li = $('ol li').last().clone();
+            li.children('textarea').val('');
+            li.children('textarea').removeAttr('style');
+            li.appendTo('ol');
+        }
+    });
+
+    $('ul,ol').on('click', 'div.delete', function() {
+        if ($(this).parent().siblings().length == 0) {
+            $(this).siblings('input, textarea').val('');
+        } else {
+            $(this).parent().remove();
+        }
+    });
+
+    $('input[name=RecipeName]').keypress(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+        }
+    });
+
+    $('ul').on('keypress', 'input', function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            var li = $(this).parent().clone();
+            li.insertAfter($(this).parent());
+            var input = li.children('input');
+            input.val('');
+            input.focus();
+        }
+    });
+
+    $('ol').on('keypress', 'textarea', function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            var li = $(this).parent().clone();
+            li.insertAfter($(this).parent());
+            var textarea = li.children('textarea');
+            textarea.val('');
+            textarea.removeAttr('style');
+            textarea.focus();
+        }
+    });
+
+    $('ul').on('keydown', 'input', function(e) {
+        if (e.keyCode == 8) {
+            if ($(this).val() == '' && $(this).parent().siblings().length != 0) {
+                e.preventDefault();
+                $(this).parent().prev().children('input').focus();
+                $(this).parent().remove();
+            }
+        }
+    });
+
+    $('ol').on('keydown', 'textarea', function(e) {
+        if (e.keyCode == 8) {
+            if ($(this).val() == '' && $(this).parent().siblings().length != 0) {
+                e.preventDefault();
+                $(this).parent().prev().children('textarea').focus();
+                $(this).parent().remove();
+            }
+        }
+    });
+
+});
+</script>
+{% endblock script %}

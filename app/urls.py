@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(pattern_name='calendar', permanent=False)),
+    url(r'^add/$', views.add, name='add'),
     url(r'^calendar/$', views.calendar, name='calendar'),
     url(r'^calendar/add/$', views.calendar_add, name='calendar_add'),
     url(r'^recipes/$', views.recipes, name='recipes'),

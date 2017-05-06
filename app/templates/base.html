@@ -25,7 +25,7 @@
                 <img class="icon" src="{% static 'icons/list.svg' %}">
                 <span>Pantry</span>
             </a>
-            <a>
+            <a href="{% url 'add' %}">
                 <img class="icon" src="{% static 'icons/plus_white.svg' %}">
                 <span>Add</span>
             </a>
@@ -71,7 +71,8 @@
             <div class="container search">
                 <div class="row">
                     <div class="col-6 push-3">
-                        <input type="text" name="search" class="form-control">
+                        <input type="text" name="search" class="form-control" placeholder="{{ placeholder }}">
+                        <img src="{% static 'icons/search.svg' %}">
                     </div>
                 </div>
             </div>

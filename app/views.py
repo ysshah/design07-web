@@ -15,6 +15,14 @@ MEALTYPES = ['Breakfast', 'Lunch / Dinner', 'Dessert']
 YMD = '%Y-%m-%d'
 
 
+def add(request):
+    context = {
+        'today': datetime.date.today().strftime(YMD),
+        'recipes': [r['RecipeName'] for r in recipesTable.scan()['Items']]
+    }
+    return render(request, 'add.html', context)
+
+
 def incrMonthYear(year, month, delta=1):
     if month == 1 and delta == -1:
         return year - 1, 12
@@ -93,7 +101,8 @@ def recipes(request):
         )
     context = {
         'mealTypes': mealTypes,
-        'recipes_selected': 'selected'
+        'recipes_selected': 'selected',
+        'placeholder': 'Search recipes...'
     }
     return render(request, 'recipes.html', context)
 
@@ -147,6 +156,7 @@ def pantry(request):
     context = {
         'ingredients': ingredients,
         'pantry_selected': 'selected',
+        'placeholder': 'Search ingredients...'
     }
     return render(request, 'pantry.html', context)
 
