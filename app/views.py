@@ -3,6 +3,7 @@ import datetime
 import boto3
 
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 recipesTable = dynamodb.Table('CookSmartRecipes')
@@ -18,7 +19,8 @@ YMD = '%Y-%m-%d'
 def add(request):
     context = {
         'today': datetime.date.today().strftime(YMD),
-        'recipes': [r['RecipeName'] for r in recipesTable.scan()['Items']]
+        'recipes': [r['RecipeName'] for r in recipesTable.scan()['Items']],
+        'page': 'add'
     }
     return render(request, 'add.html', context)
 
@@ -32,6 +34,19 @@ def incrMonthYear(year, month, delta=1):
 
 
 def calendar(request):
+    if request.method == 'POST':
+        recipes = request.POST.getlist('recipes[]')
+        dates = request.POST.getlist('dates[]')
+        mealtypes = request.POST.getlist('mealtypes[]')
+        for i, recipe in enumerate(recipes):
+            if dates[i] and mealtypes[i]:
+                item = {
+                    'RecipeName': recipe,
+                    'Date': dates[i],
+                    'MealType': mealtypes[i]
+                }
+                calendarTable.put_item(Item=item)
+
     today = datetime.date.today()
     oneday = datetime.timedelta(1)
     dates = []
@@ -49,7 +64,7 @@ def calendar(request):
 
     context = {
         'dates': dates,
-        'calendar_selected': 'selected'
+        'addtype': 'meals'
     }
     return render(request, 'calendar.html', context)
 
@@ -66,48 +81,11 @@ def calendar_dates(request):
     return render(request, 'calendar_dates.html', context)
 
 
-def calendar_add(request):
-    if request.method == 'POST':
-        recipes = request.POST.getlist('recipes[]')
-        dates = request.POST.getlist('dates[]')
-        mealtypes = request.POST.getlist('mealtypes[]')
-        for i, recipe in enumerate(recipes):
-            if dates[i] and mealtypes[i]:
-                item = {
-                    'RecipeName': recipe,
-                    'Date': dates[i],
-                    'MealType': mealtypes[i]
-                }
-                calendarTable.put_item(Item=item)
-        return redirect('calendar')
-
-    context = {
-        'today': datetime.date.today().strftime(YMD),
-        'recipes': [r['RecipeName'] for r in recipesTable.scan()['Items']]
-    }
-    return render(request, 'calendar_add.html', context)
-
-
 def view_mealplan(request):
     return render(request, 'calendar_mealplan.html')
 
 
 def recipes(request):
-    items = recipesTable.scan()['Items']
-    mealTypes = []
-    for mealType in MEALTYPES:
-        mealTypes.append(
-            (mealType, [r for r in items if r['MealType'] == mealType])
-        )
-    context = {
-        'mealTypes': mealTypes,
-        'recipes_selected': 'selected',
-        'placeholder': 'Search recipes...'
-    }
-    return render(request, 'recipes.html', context)
-
-
-def recipes_add(request):
     if request.method == 'POST':
         recipe_name = request.POST['RecipeName']
         ingredients = [i for i in request.POST.getlist('Ingredients[]') if i]
@@ -122,7 +100,28 @@ def recipes_add(request):
                 item['PrepDirections'] = '\n'.join(directions)
             recipesTable.put_item(Item=item)
             return redirect('view_recipe', recipe_name=recipe_name)
-    return render(request, 'recipes_add.html', {'page_title': 'Add Recipe | '})
+        return redirect(reverse('add') + '#add-recipe')
+
+    items = recipesTable.scan()['Items']
+    mealTypes = []
+    for mealType in MEALTYPES:
+        mealTypes.append(
+            (mealType, [r for r in items if r['MealType'] == mealType])
+        )
+    context = {
+        'mealTypes': mealTypes,
+        'recipes_selected': 'selected',
+        'placeholder': 'Search recipes...',
+        'addtype': 'recipe'
+    }
+    return render(request, 'recipes.html', context)
+
+
+def splitByNewline(recipe):
+    recipe['Ingredients'] = recipe['IngredientsList'].split('\n')
+    if 'PrepDirections' in recipe:
+        recipe['Directions'] = recipe['PrepDirections'].split('\n')
+    return recipe
 
 
 def view_recipe(request, recipe_name):
@@ -134,34 +133,14 @@ def view_recipe(request, recipe_name):
     if 'Item' in query:
         context = {
             'recipe': splitByNewline(query['Item']),
-            'page_title': recipe_name + ' | '
+            'page_title': recipe_name + ' | ',
+            'addtype': 'recipe'
         }
         return render(request, 'view_recipe.html', context)
     raise Http404("Recipe does not exist.")
 
 
 def pantry(request):
-    categories = ['Fruits', 'Vegetables', 'Dairy', 'Spices', 'Meats']
-    items = pantryTable.scan()['Items']
-    ingredients = {}
-    today = datetime.datetime.today()
-    for item in items:
-        exp = datetime.datetime.strptime(item['ExpirationDate'], YMD)
-        item['DaysLeft'] = (exp - today).days
-        if item['Category'] in ingredients:
-            ingredients[item['Category']].append(item)
-        else:
-            ingredients[item['Category']] = [item]
-
-    context = {
-        'ingredients': ingredients,
-        'pantry_selected': 'selected',
-        'placeholder': 'Search ingredients...'
-    }
-    return render(request, 'pantry.html', context)
-
-
-def pantry_add(request):
     if request.method == 'POST':
         ingredients = request.POST.getlist('ingredients[]')
         categories = request.POST.getlist('categories[]')
@@ -179,12 +158,23 @@ def pantry_add(request):
                 if units[i]:
                     item['IngredientUnit'] = units[i]
                 pantryTable.put_item(Item=item)
-                return redirect('pantry')
-    return render(request, 'pantry_add.html')
 
+    categories = ['Fruits', 'Vegetables', 'Dairy', 'Spices', 'Meats']
+    items = pantryTable.scan()['Items']
+    ingredients = {}
+    today = datetime.datetime.today()
+    for item in items:
+        exp = datetime.datetime.strptime(item['ExpirationDate'], YMD)
+        item['DaysLeft'] = (exp - today).days
+        if item['Category'] in ingredients:
+            ingredients[item['Category']].append(item)
+        else:
+            ingredients[item['Category']] = [item]
 
-def splitByNewline(recipe):
-    recipe['Ingredients'] = recipe['IngredientsList'].split('\n')
-    if 'PrepDirections' in recipe:
-        recipe['Directions'] = recipe['PrepDirections'].split('\n')
-    return recipe
+    context = {
+        'ingredients': ingredients,
+        'pantry_selected': 'selected',
+        'placeholder': 'Search ingredients...',
+        'addtype': 'ingredients'
+    }
+    return render(request, 'pantry.html', context)

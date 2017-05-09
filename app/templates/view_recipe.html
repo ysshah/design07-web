@@ -26,6 +26,20 @@
                 </li>
             {% endfor %}
             </ul>
+            <div class="text-center">
+                <span class="mr-4">
+                    <img src="{% static 'icons/checkmark.svg' %}" width="25px">
+                    In your pantry
+                </span>
+                <span class="mr-4">
+                    <img src="{% static 'icons/warning.svg' %}" width="25px">
+                    Running low / expiring soon
+                </span>
+                <span class="mr-4">
+                    <img src="{% static 'icons/cross.svg' %}" width="35px">
+                    Missing
+                </span>
+            </div>
         </div>
         <div class="col-6">
             <h4>Directions</h4>

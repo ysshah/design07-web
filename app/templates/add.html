@@ -2,17 +2,17 @@
 {% load static %}
 
 {% block content %}
-<div class="container tabs">
+<div class="container tabs pb-4">
     <div class="row">
-        <div class="col-4 text-center tab" data-id="#add-meals">Meals</div>
-        <div class="col-4 text-center tab" data-id="#add-recipe">Recipe</div>
-        <div class="col-4 text-center tab" data-id="#add-ingredients">Ingredients</div>
+        <div class="col-2 push-1 pb-3 text-center tab" data-id="#add-meals">Meals</div>
+        <div class="col-2 push-3 pb-3 text-center tab" data-id="#add-recipe">Recipe</div>
+        <div class="col-2 push-5 pb-3 text-center tab" data-id="#add-ingredients">Ingredients</div>
     </div>
 </div>
 <div class="container add-ingredients tab-item" id="add-meals">
     <h3 class="text-center">Add Meal to Meal Plan</h3>
     <img id="add" src="{% static 'icons/plus_black.svg' %}">
-    <form action="{% url 'calendar_add' %}" method="post">
+    <form action="{% url 'calendar' %}" method="post">
         <div class="row">
             <div class="col-3 inline-field pr-2">Date</div>
             <div class="col-3 inline-field px-2">Meal</div>
@@ -21,7 +21,7 @@
         <div id="inputs">
             <div class="row">
                 <div class="col-3 inline-field pr-2">
-                    <input class="form-control add-ingredients" type="date" name="dates[]">
+                    <input class="form-control add-ingredients" type="date" name="dates[]" value="{{ today }}">
                 </div>
                 <div class="col-3 inline-field px-2">
                     <select class="form-control add-ingredients" name="mealtypes[]">
@@ -44,7 +44,7 @@
         </div>
     </form>
 </div>
-<form id="add-recipe" class="tab-item" action="{% url 'recipes_add' %}" method="post">
+<form id="add-recipe" class="tab-item" action="{% url 'recipes' %}" method="post">
     <div class="container add">
         <h3 class="text-center">Add New Recipe</h3>
         <div class="row">
@@ -108,7 +108,7 @@
 <div id="add-ingredients" class="container add-ingredients tab-item">
     <h3 class="text-center">Add Ingredients</h3>
     <img id="add" src="{% static 'icons/plus_black.svg' %}">
-    <form action="{% url 'pantry_add' %}" method="post">
+    <form action="{% url 'pantry' %}" method="post">
         <div class="row">
             <div class="col-3 inline-field pr-2">Name</div>
             <div class="col-2 inline-field px-2">Category</div>
@@ -164,9 +164,32 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+    var id = window.location.hash;
+    $(id).show();
+    $('div.tab[data-id="' + id + '"]').css('font-weight', 'bold');
+    $('div.tab[data-id="' + id + '"]').css('color', '#f2994a');
+
+    // .css('border-bottom', '1px solid #f2994a');
+
     $('div.tab').click(function() {
         $('.tab-item').hide();
-        $($(this).data('id')).show();
+        var id = $(this).data('id');
+        $(id).show();
+        window.location.hash = id;
+        $('div.tab').css('font-weight', 'normal');
+        $('div.tab').css('color', 'black');
+        // .css('border-bottom', 'none');
+        $(this).css('font-weight', 'bold');
+        $(this).css('color', '#f2994a');
+        // .css('border-bottom', '1px solid #f2994a');
+    });
+
+    $('div.tab').hover(function() {
+        $(this).css('border-bottom', '1px solid #f2994a');
+        $(this).css('margin-bottom', '-1px');
+    }, function() {
+        $(this).css('border-bottom', 'none');
+        $(this).css('margin-bottom', '0');
     });
 
     var recipes = [];
