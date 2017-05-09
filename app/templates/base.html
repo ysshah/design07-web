@@ -34,13 +34,9 @@
         <div class="top-nav fixed-top">
             <div class="container">
                 <div class="row">
-                {% if recipes_selected or pantry_selected %}
-                    <div class="middle" id="sort_or_down" data-toggle="tooltip" data-trigger="manual" data-placement="right" title="Tap here to sort!">
+                    {% comment %}
                         <img class="icon in-nav" src="{% static 'icons/down_up.svg' %}">
-                    </div>
-                {% else %}
-                    <div class="middle" id="sort_or_down"></div>
-                {% endif %}
+                    {% endcomment %}
                     <div id="menu">
                         <img width="50px" src="{% static 'icons/menu.svg' %}">
                     </div>
@@ -67,7 +63,16 @@
             </div>
         </div>
         <div class="content">
-        {% if recipes_selected or pantry_selected %}
+        {% if recipes_selected %}
+            <div class="container search">
+                <div class="row">
+                    <div class="col-6 push-3">
+                        <input type="text" name="search" class="form-control" placeholder="{{ placeholder }}">
+                        <img src="{% static 'icons/search.svg' %}">
+                    </div>
+                </div>
+            </div>
+        {% elif pantry_selected %}
             <div class="container search">
                 <div class="row">
                     <div class="col-6 push-3">

@@ -5,9 +5,13 @@
     <div class="row">
     {% for category, items in ingredients.items %}
         <div class="col-4 category">
-            <h5 class="category">{{ category }}</h5>
+            <h5 class="category">{{ category }}
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="rounded-circle text-center pantry-indicator">2</div>
+            {% endif %}
+            </h5>
         {% for item in items %}
-            <div class="ingredient d-flex align-items-center">
+            <div class="ingredient d-flex align-items-center mb-3">
                 <div class="name">{{ item.IngredientName }}</div>
                 <div class="info text-right">
                     <div>{{ item.IngredientAmount }} {{ item.IngredientUnit }} left</div>

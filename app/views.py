@@ -79,7 +79,7 @@ def calendar_add(request):
                     'MealType': mealtypes[i]
                 }
                 calendarTable.put_item(Item=item)
-                return redirect('calendar')
+        return redirect('calendar')
 
     context = {
         'today': datetime.date.today().strftime(YMD),

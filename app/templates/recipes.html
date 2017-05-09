@@ -3,7 +3,7 @@
 {% block content %}
 {% for mealType, recipes in mealTypes %}
     <div class="container">
-    <h3 class="recipe-category">{{ mealType }}</h3>
+    <h3 class="recipe-category my-2">{{ mealType }}</h3>
     {% for recipe in recipes %}
         <div class="recipe">
             <a href="{% url 'view_recipe' recipe.RecipeName %}" class="image">

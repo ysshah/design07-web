@@ -14,16 +14,16 @@
     <img id="add" src="{% static 'icons/plus_black.svg' %}">
     <form action="{% url 'calendar_add' %}" method="post">
         <div class="row">
-            <div class="col-3 inline-field">Date</div>
-            <div class="col-3 inline-field">Meal</div>
-            <div class="col-6 inline-field">Recipe</div>
+            <div class="col-3 inline-field pr-2">Date</div>
+            <div class="col-3 inline-field px-2">Meal</div>
+            <div class="col-6 inline-field pl-2">Recipe</div>
         </div>
         <div id="inputs">
             <div class="row">
-                <div class="col-3 inline-field">
+                <div class="col-3 inline-field pr-2">
                     <input class="form-control add-ingredients" type="date" name="dates[]">
                 </div>
-                <div class="col-3 inline-field">
+                <div class="col-3 inline-field px-2">
                     <select class="form-control add-ingredients" name="mealtypes[]">
                         <option>Breakfast</option>
                         <option>Lunch</option>
@@ -31,7 +31,7 @@
                         <option>Dessert</option>
                     </select>
                 </div>
-                <div class="col-5 inline-field">
+                <div class="col-5 inline-field pl-2 pr-0">
                     <input class="form-control add-ingredients input-recipe" type="text" name="recipes[]" placeholder="Recipe" autocomplete="off">
                 </div>
                 <div class="col-1 input-delete">
@@ -110,18 +110,18 @@
     <img id="add" src="{% static 'icons/plus_black.svg' %}">
     <form action="{% url 'pantry_add' %}" method="post">
         <div class="row">
-            <div class="col-3 inline-field">Name</div>
-            <div class="col-2 inline-field">Category</div>
-            <div class="col-2 inline-field">Expiration Date</div>
-            <div class="col-2 inline-field">Quantity</div>
-            <div class="col-2 inline-field">Unit</div>
+            <div class="col-3 inline-field pr-2">Name</div>
+            <div class="col-2 inline-field px-2">Category</div>
+            <div class="col-2 inline-field px-2">Expiration Date</div>
+            <div class="col-2 inline-field px-2">Quantity</div>
+            <div class="col-2 inline-field pl-2">Unit</div>
         </div>
         <div id="inputs">
             <div class="row">
-                <div class="col-3 inline-field">
+                <div class="col-3 inline-field pr-2">
                     <input class="form-control add-ingredients" type="text" name="ingredients[]" placeholder="Enter ingredient">
                 </div>
-                <div class="col-2 inline-field">
+                <div class="col-2 inline-field px-2">
                     <select class="form-control add-ingredients" name="categories[]">
                         <option>Dairy</option>
                         <option>Fruits</option>
@@ -130,13 +130,13 @@
                         <option>Nuts</option>
                     </select>
                 </div>
-                <div class="col-2 inline-field">
+                <div class="col-2 inline-field px-2">
                     <input class="form-control add-ingredients" type="date" name="dates[]">
                 </div>
-                <div class="col-2 inline-field">
+                <div class="col-2 inline-field px-2">
                     <input class="form-control add-ingredients" type="number" name="quantities[]" placeholder="Quantity">
                 </div>
-                <div class="col-2 inline-field">
+                <div class="col-2 inline-field pl-2 pr-0">
                     <select class="form-control add-ingredients" name="units[]">
                         <option></option>
                         <option>ounces</option>

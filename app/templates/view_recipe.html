@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="container">
     <h1 class="text-center">{{ recipe.RecipeName }}</h1>
-    <div class="row recipe-image">
+    <div class="row recipe-image mb-4">
         <div class="col-8 push-2 text-center">
             <img class="img-fluid" src="{{ recipe.ImageSRC }}">
         </div>
@@ -13,7 +14,16 @@
             <h4>Ingredients</h4>
             <ul>
             {% for ingredient in recipe.Ingredients %}
-                <li>{{ ingredient }}</li>
+                <li>
+                    {% if forloop.counter0|divisibleby:3 %}
+                        <img class="ingredient-indicator alert-icon" src="{% static 'icons/warning.svg' %}" width="25px">
+                    {% elif forloop.counter0|divisibleby:2 %}
+                        <img class="ingredient-indicator cross" src="{% static 'icons/cross.svg' %}" width="35px">
+                    {% else %}
+                        <img class="ingredient-indicator checkmark" src="{% static 'icons/checkmark.svg' %}" width="25px">
+                    {% endif %}
+                    {{ ingredient }}
+                </li>
             {% endfor %}
             </ul>
         </div>

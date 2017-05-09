@@ -4,9 +4,13 @@ $black-light: #555;
 
 body {
     font-family: 'Josefin Sans', sans-serif;
+    position: relative;
 }
 button, input, select, .tooltip {
     font: inherit;
+}
+input.form-control:focus, select.form-control:focus, textarea.form-control:focus {
+    border-color: $primary-color;
 }
 input.add-ingredients[type=text], input.add-ingredients[type=number] {
     line-height: 1.5;
@@ -27,7 +31,7 @@ a {
     background-color: rgba(247,193,145,0.9);
     height: 100%;
     left: -300px;
-    position: absolute;
+    position: fixed;
     width: 300px;
     z-index: 1032;
     a {
@@ -108,9 +112,6 @@ div.container.search {
         top: 5px;
         width: 26px;
     }
-    input:focus {
-        border-color: $primary-color;
-    }
 }
 
 /* Add page */
@@ -160,14 +161,6 @@ div#dates {
 div#mealplan {
     h5 {
         background-color: $primary-color-light;
-        margin-bottom: 0;
-        margin-top: 10px;
-        padding: 8px;
-    }
-    div.date {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
     }
     div.mealType {
         border-right: 1px solid $black-light;
@@ -196,15 +189,6 @@ img#add {
 }
 
 /* Recipes page */
-.recipe-category {
-    margin: 10px 0;
-}
-div#view-recipe {
-    overflow-y: scroll;
-    h4 {
-        margin-top: 15px;
-    }
-}
 .recipe {
     cursor: pointer;
     display: inline-block;
@@ -232,9 +216,19 @@ div#view-recipe {
     }
 }
 
-/* View Recipe Page */
-div.recipe-image {
-    margin-bottom: 20px;
+/* View recipe */
+.ingredient-indicator {
+    position: absolute;
+    &.checkmark {
+        left: 10px;
+    }
+    &.cross {
+        left: 5px;
+        margin-top: -5px;
+    }
+    &.alert-icon {
+        left: 10px;
+    }
 }
 
 /* Pantry page */
@@ -251,7 +245,6 @@ div.container.pantry {
         div.ingredient {
             position: relative;
             height: 48px;
-            margin-bottom: 20px;
             div.name, div.info {
                 position: absolute;
             }
@@ -262,6 +255,15 @@ div.container.pantry {
             div.info {
                 right: 15px;
             }
+        }
+        .pantry-indicator {
+            background-color: red;
+            height: 25px;
+            line-height: 28px;
+            position: absolute;
+            right: 21px;
+            top: 7px;
+            width: 25px;
         }
     }
 }
