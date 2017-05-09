@@ -7,7 +7,7 @@
         <div class="col-4 category">
             <h5 class="category">{{ category }}
             {% if forloop.counter|divisibleby:2 %}
-                <div class="rounded-circle text-center pantry-indicator">2</div>
+                <div class="rounded-circle text-center pantry-indicator" data-toggle="popover" title="Ingredient Warnings" data-content="<ul><li>Eggs are running low</li><li>Tomatoes are expiring in two days</li></ul>" data-html="true">2</div>
             {% endif %}
             </h5>
         {% for item in items %}
@@ -24,3 +24,14 @@
     </div>
 </div>
 {% endblock content %}
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+
+});
+</script>
+{% endblock script %}

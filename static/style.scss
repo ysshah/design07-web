@@ -24,6 +24,13 @@ a {
         text-decoration: none;
     }
 }
+.popover-title, .popover-content {
+    font-family: 'Josefin Sans', sans-serif;
+    ul {
+        padding-left: 11px;
+        margin-bottom: 0;
+    }
+}
 
 /* Navigation bars and Sidebar */
 #sidebar {
@@ -259,12 +266,17 @@ div.container.pantry {
         }
         .pantry-indicator {
             background-color: red;
+            cursor: pointer;
             height: 25px;
             line-height: 28px;
             position: absolute;
             right: 21px;
             top: 7px;
+            transition: 0.2s;
             width: 25px;
+            &:hover {
+                background-color: #b30000;
+            }
         }
     }
 }
