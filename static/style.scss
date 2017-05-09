@@ -103,14 +103,11 @@ img.icon {
 div.content {
     padding: 80px 0;
 }
-div.container.search {
-    padding-bottom: 20px;
-    img {
-        position: absolute;
-        right: 20px;
-        top: 5px;
-        width: 26px;
-    }
+div.container.search img {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    width: 26px;
 }
 
 /* Add page */
@@ -229,6 +226,11 @@ img#add {
         left: 10px;
     }
 }
+#cross-label {
+    position: relative;
+    right: -4px;
+    top: -2px;
+}
 
 /* Pantry page */
 div.container.pantry {
@@ -267,12 +269,10 @@ div.container.pantry {
     }
 }
 
-/* Add ingredient page */
-form div.row {
-    div.inline-field {
-        // padding: 0 5px;
-        margin-top: 10px;
-    }
+/* Add page */
+.add-cross {
+    position: relative;
+    top: -11px;
 }
 div.container.add-ingredients {
     position: relative;
@@ -283,8 +283,6 @@ div.container.add-ingredients {
         width: 62px;
     }
 }
-
-/* Add recipe page */
 div.add.name {
     margin-bottom: 30px;
     margin-top: 30px;
@@ -293,10 +291,8 @@ div.add.name {
     }
 }
 label.upload {
+    cursor: pointer;
     margin-top: 20px;
-    &:hover {
-        cursor: pointer;
-    }
     img {
         width: 40px;
     }

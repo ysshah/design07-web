@@ -25,7 +25,7 @@
                 <img class="icon" src="{% static 'icons/list.svg' %}">
                 <span>Pantry</span>
             </a>
-            <a href="{% url 'add' %}">
+            <a href="{% url 'add' %}#add-{{ addtype }}">
                 <img class="icon" src="{% static 'icons/plus_white.svg' %}">
                 <span>Add</span>
             </a>
@@ -43,7 +43,7 @@
                     <a href="{% url 'calendar' %}" class="push-4 col-4 text-center middle navbar-link">
                         <div>CookSmart</div>
                     </a>
-                {% if page != 'add' %}
+                {% if page_title != 'Add | ' %}
                     <a href="{% url 'add' %}#add-{{ addtype }}" class="text-right navbar-link">
                         <img class="icon in-nav" src="{% static 'icons/plus_white.svg' %}">
                         <div>Add {{ addtype|title }}</div>
@@ -53,16 +53,7 @@
             </div>
         </div>
         <div class="content">
-        {% if recipes_selected %}
-            <div class="container search">
-                <div class="row">
-                    <div class="col-6 push-3">
-                        <input type="text" name="search" class="form-control" placeholder="{{ placeholder }}">
-                        <img src="{% static 'icons/search.svg' %}">
-                    </div>
-                </div>
-            </div>
-        {% elif pantry_selected %}
+        {% if page_title == 'All Recipes | ' or page_title == 'Pantry | ' %}
             <div class="container search">
                 <div class="row">
                     <div class="col-6 push-3">

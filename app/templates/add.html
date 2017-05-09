@@ -14,16 +14,16 @@
     <img id="add" src="{% static 'icons/plus_black.svg' %}">
     <form action="{% url 'calendar' %}" method="post">
         <div class="row">
-            <div class="col-3 inline-field pr-2">Date</div>
-            <div class="col-3 inline-field px-2">Meal</div>
-            <div class="col-6 inline-field pl-2">Recipe</div>
+            <div class="col-3 pr-2">Date</div>
+            <div class="col-3 px-2">Meal</div>
+            <div class="col-6 pl-2">Recipe</div>
         </div>
         <div id="inputs">
             <div class="row">
-                <div class="col-3 inline-field pr-2">
+                <div class="col-3 pr-2">
                     <input class="form-control add-ingredients" type="date" name="dates[]" value="{{ today }}">
                 </div>
-                <div class="col-3 inline-field px-2">
+                <div class="col-3 px-2">
                     <select class="form-control add-ingredients" name="mealtypes[]">
                         <option>Breakfast</option>
                         <option>Lunch</option>
@@ -31,11 +31,11 @@
                         <option>Dessert</option>
                     </select>
                 </div>
-                <div class="col-5 inline-field pl-2 pr-0">
+                <div class="col-5 pl-2 pr-0">
                     <input class="form-control add-ingredients input-recipe" type="text" name="recipes[]" placeholder="Recipe" autocomplete="off">
                 </div>
                 <div class="col-1 input-delete">
-                    <img src="{% static 'icons/cross.svg' %}">
+                    <img class="add-cross" src="{% static 'icons/cross.svg' %}">
                 </div>
             </div>
         </div>
@@ -110,18 +110,18 @@
     <img id="add" src="{% static 'icons/plus_black.svg' %}">
     <form action="{% url 'pantry' %}" method="post">
         <div class="row">
-            <div class="col-3 inline-field pr-2">Name</div>
-            <div class="col-2 inline-field px-2">Category</div>
-            <div class="col-2 inline-field px-2">Expiration Date</div>
-            <div class="col-2 inline-field px-2">Quantity</div>
-            <div class="col-2 inline-field pl-2">Unit</div>
+            <div class="col-3 pr-2">Name</div>
+            <div class="col-2 px-2">Category</div>
+            <div class="col-2 px-2">Expiration Date</div>
+            <div class="col-2 px-2">Quantity</div>
+            <div class="col-2 pl-2">Unit</div>
         </div>
         <div id="inputs">
             <div class="row">
-                <div class="col-3 inline-field pr-2">
+                <div class="col-3 pr-2">
                     <input class="form-control add-ingredients" type="text" name="ingredients[]" placeholder="Enter ingredient">
                 </div>
-                <div class="col-2 inline-field px-2">
+                <div class="col-2 px-2">
                     <select class="form-control add-ingredients" name="categories[]">
                         <option>Dairy</option>
                         <option>Fruits</option>
@@ -130,13 +130,13 @@
                         <option>Nuts</option>
                     </select>
                 </div>
-                <div class="col-2 inline-field px-2">
+                <div class="col-2 px-2">
                     <input class="form-control add-ingredients" type="date" name="dates[]">
                 </div>
-                <div class="col-2 inline-field px-2">
+                <div class="col-2 px-2">
                     <input class="form-control add-ingredients" type="number" name="quantities[]" placeholder="Quantity">
                 </div>
-                <div class="col-2 inline-field pl-2 pr-0">
+                <div class="col-2 pl-2 pr-0">
                     <select class="form-control add-ingredients" name="units[]">
                         <option></option>
                         <option>ounces</option>
@@ -149,7 +149,7 @@
                     </select>
                 </div>
                 <div class="col-1 input-delete">
-                    <img src="{% static 'icons/cross.svg' %}">
+                    <img class="add-cross" src="{% static 'icons/cross.svg' %}">
                 </div>
             </div>
         </div>
@@ -169,8 +169,6 @@ $(document).ready(function() {
     $('div.tab[data-id="' + id + '"]').css('font-weight', 'bold');
     $('div.tab[data-id="' + id + '"]').css('color', '#f2994a');
 
-    // .css('border-bottom', '1px solid #f2994a');
-
     $('div.tab').click(function() {
         $('.tab-item').hide();
         var id = $(this).data('id');
@@ -178,10 +176,8 @@ $(document).ready(function() {
         window.location.hash = id;
         $('div.tab').css('font-weight', 'normal');
         $('div.tab').css('color', 'black');
-        // .css('border-bottom', 'none');
         $(this).css('font-weight', 'bold');
         $(this).css('color', '#f2994a');
-        // .css('border-bottom', '1px solid #f2994a');
     });
 
     $('div.tab').hover(function() {
@@ -190,6 +186,12 @@ $(document).ready(function() {
     }, function() {
         $(this).css('border-bottom', 'none');
         $(this).css('margin-bottom', '0');
+    });
+
+    $('a[href="/add/#add-"]').click(function(e) {
+        e.preventDefault();
+        $('#black-cover').fadeOut();
+        $("#sidebar").animate({left: '-300px'});
     });
 
     var recipes = [];

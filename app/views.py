@@ -20,7 +20,7 @@ def add(request):
     context = {
         'today': datetime.date.today().strftime(YMD),
         'recipes': [r['RecipeName'] for r in recipesTable.scan()['Items']],
-        'page': 'add'
+        'page_title': 'Add | '
     }
     return render(request, 'add.html', context)
 
@@ -110,9 +110,9 @@ def recipes(request):
         )
     context = {
         'mealTypes': mealTypes,
-        'recipes_selected': 'selected',
         'placeholder': 'Search recipes...',
-        'addtype': 'recipe'
+        'addtype': 'recipe',
+        'page_title': 'All Recipes | '
     }
     return render(request, 'recipes.html', context)
 
@@ -173,7 +173,7 @@ def pantry(request):
 
     context = {
         'ingredients': ingredients,
-        'pantry_selected': 'selected',
+        'page_title': 'Pantry | ',
         'placeholder': 'Search ingredients...',
         'addtype': 'ingredients'
     }
