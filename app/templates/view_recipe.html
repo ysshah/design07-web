@@ -2,6 +2,31 @@
 {% load static %}
 
 {% block content %}
+<div class="modal fade" id="groceryList" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Grocery List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                {% for ingredient in recipe.Ingredients %}
+                {% if forloop.counter0|divisibleby:2 %}
+                    <li>{{ ingredient }}</li>
+                {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Open in New Window</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <h1 class="text-center">{{ recipe.RecipeName }}</h1>
     <div class="row recipe-image mb-4">
@@ -39,6 +64,9 @@
                     <img id="cross-label" src="{% static 'icons/cross.svg' %}" width="35px">
                     Missing
                 </span>
+            </div>
+            <div class="text-center">
+                <button class="btn submit mt-1" data-toggle="modal" data-target="#groceryList">Generate Grocery List</button>
             </div>
         </div>
         <div class="col-6">

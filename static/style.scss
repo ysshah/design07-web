@@ -175,22 +175,31 @@ div#mealplan {
         background-color: $primary-color-light;
     }
     .meal-row {
+        overflow: hidden;
         position: relative;
         img {
             cursor: pointer;
-            display: none;
             position: absolute;
+            -webkit-transition: 0.2s;
+            -moz-transition: 0.2s;
+            -o-transition: 0.2s;
+            transition: 0.2s;
             &.delete {
-                right: 0;
+                right: -65px;
                 top: 0;
             }
             &.edit {
-                right: 40px;
+                right: -25px;
                 top: 6px;
             }
         }
         &:hover img {
-            display: block;
+            &.delete {
+                right: 0;
+            }
+            &.edit {
+                right: 40px;
+            }
         }
     }
     div.mealType {
