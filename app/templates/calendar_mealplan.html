@@ -1,9 +1,13 @@
+{% load static %}
+
 {% for d in dates %}
     <h5 class="mb-0 mt-2 p-2">{{ d.date }}</h5>
     {% for mealType, meal in d.meals %}
-        <div>
+        <div class="meal-row">
             <div class="mealType">{{ mealType }}</div>
             <a class="meal" href="{% url 'view_recipe' meal %}">{{ meal }}</a>
+            <img class="edit" src="{% static 'icons/edit.svg' %}" width="25px">
+            <img class="delete" src="{% static 'icons/cross.svg' %}" width="40px">
         </div>
     {% endfor %}
 {% endfor %}

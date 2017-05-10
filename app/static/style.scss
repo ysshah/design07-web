@@ -165,6 +165,25 @@ div#mealplan {
     h5 {
         background-color: $primary-color-light;
     }
+    .meal-row {
+        position: relative;
+        img {
+            cursor: pointer;
+            display: none;
+            position: absolute;
+            &.delete {
+                right: 0;
+                top: 0;
+            }
+            &.edit {
+                right: 40px;
+                top: 6px;
+            }
+        }
+        &:hover img {
+            display: block;
+        }
+    }
     div.mealType {
         border-right: 1px solid $black-light;
         display: inline-block;
