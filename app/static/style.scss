@@ -1,5 +1,6 @@
 $primary-color: #f2994a;
 $primary-color-light: #f7c191;
+$primary-color-dark: #df7210;
 $black-light: #555;
 
 body {
@@ -29,6 +30,14 @@ a {
     ul {
         padding-left: 11px;
         margin-bottom: 0;
+    }
+}
+.btn-primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    &:hover {
+        background-color: $primary-color-dark;
+        border-color: $primary-color-dark;
     }
 }
 
@@ -270,9 +279,10 @@ div.container.pantry {
             padding: 8px;
         }
         div.ingredient {
-            position: relative;
             height: 48px;
-            div.name, div.info {
+            overflow: hidden;
+            position: relative;
+            div.name, div.info, div.edit-icons {
                 position: absolute;
             }
             div.name {
@@ -280,6 +290,20 @@ div.container.pantry {
                 left: 15px;
             }
             div.info {
+                height: 48px;
+                right: -60px;
+                -webkit-transition: 0.2s;
+                -moz-transition: 0.2s;
+                -o-transition: 0.2s;
+                transition: 0.2s;
+                div.edit-icons {
+                    cursor: pointer;
+                    left: 10px;
+                    position: relative;
+                    top: -14px;
+                }
+            }
+            &:hover div.info {
                 right: 15px;
             }
         }
@@ -298,6 +322,26 @@ div.container.pantry {
             }
         }
     }
+}
+.share-circle {
+    &:first-child {
+        background-color: #4af299;
+    }
+    &:nth-child(2) {
+        background-color: #994af2;
+    }
+    &:nth-child(3) {
+        background-color: #f2ed4a;
+    }
+    &:nth-child(4) {
+        background-color: #4aa3f2;
+    }
+    margin-left: 10px;
+    margin-top: 1px;
+    display: inline-block;
+    height: 35px;
+    line-height: 40px;
+    width: 35px;
 }
 
 /* Add page */

@@ -53,16 +53,30 @@
             </div>
         </div>
         <div class="content">
-        {% if page_title == 'All Recipes | ' or page_title == 'Pantry | ' %}
             <div class="container search">
                 <div class="row">
+                {% if page_title == 'All Recipes | ' %}
                     <div class="col-6 push-3">
                         <input type="text" name="search" class="form-control" placeholder="{{ placeholder }}">
                         <img src="{% static 'icons/search.svg' %}">
                     </div>
+                {% elif page_title == 'Pantry | ' %}
+                    <div class="col-6">
+                        <input type="text" name="search" class="form-control" placeholder="{{ placeholder }}">
+                        <img src="{% static 'icons/search.svg' %}">
+                    </div>
+                    <div class="col-1">
+                        <button data-toggle="modal" data-target="#shareModal" class="btn submit mt-0">Share</button>
+                    </div>
+                    <div class="col-5 text-right">
+                        <div class="rounded-circle text-center share-circle" data-toggle="tooltip" data-placement="bottom" title="Yash Shah">Y</div>
+                        <div class="rounded-circle text-center share-circle" data-toggle="tooltip" data-placement="bottom" title="Timothy Sivaraman">T</div>
+                        <div class="rounded-circle text-center share-circle" data-toggle="tooltip" data-placement="bottom" title="Kevin Nam">K</div>
+                        <div class="rounded-circle text-center share-circle" data-toggle="tooltip" data-placement="bottom" title="Nikita Shah">N</div>
+                    </div>
+                {% endif %}
                 </div>
             </div>
-        {% endif %}
         {% block content %}{% endblock content %}
         </div>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

@@ -1,6 +1,86 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sharing Settings</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+            <thead>
+                <tr>
+                    <th class="border-top-0">Name</th>
+                    <th class="border-top-0">Access</th>
+                    <th class="border-top-0">Revoke</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="line-height:38px">
+                    <td>Yash Shah</td>
+                    <td>
+                        <select class="form-control" style="width:87px">
+                            <option>Is Owner</option>
+                            <option>Can Edit</option>
+                            <option>Can View</option>
+                        </select>
+                    </td>
+                    <td class="p-2"><img width="46px" src="{% static 'icons/cross.svg' %}"></td>
+                </tr>
+                <tr style="line-height:38px">
+                    <td>Timothy Sivaraman</td>
+                    <td>
+                        <select class="form-control" style="width:87px">
+                            <option>Can Edit</option>
+                            <option>Can View</option>
+                            <option>Is Owner</option>
+                        </select>
+                    </td>
+                    <td class="p-2"><img width="46px" src="{% static 'icons/cross.svg' %}"></td>
+                </tr>
+                <tr style="line-height:38px">
+                    <td>Kevin Nam</td>
+                    <td>
+                        <select class="form-control" style="width:87px">
+                            <option>Can Edit</option>
+                            <option>Can View</option>
+                            <option>Is Owner</option>
+                        </select>
+                    </td>
+                    <td class="p-2"><img width="46px" src="{% static 'icons/cross.svg' %}"></td>
+                </tr>
+                <tr style="line-height:38px">
+                    <td>Nikita Shah</td>
+                    <td>
+                        <select class="form-control" style="width:87px">
+                            <option>Can Edit</option>
+                            <option>Can View</option>
+                            <option>Is Owner</option>
+                        </select>
+                    </td>
+                    <td class="p-2"><img width="46px" src="{% static 'icons/cross.svg' %}"></td>
+                </tr>
+            </tbody>
+            </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div style="line-height:40px" class="col-4">Add new email:</div>
+                    <div class="col-8"><input type="email" name="email" class="form-control"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+    </div>
+</div>
 <div class="container pantry mt-4">
     <div class="row">
     {% for category, items in ingredients.items %}
@@ -13,9 +93,15 @@
         {% for item in items %}
             <div class="ingredient d-flex align-items-center mb-3">
                 <div class="name">{{ item.IngredientName }}</div>
-                <div class="info text-right">
-                    <div>{{ item.IngredientAmount }} {{ item.IngredientUnit }} left</div>
-                    <div>{{ item.DaysLeft }} days left</div>
+                <div class="info">
+                    <div class="text-right d-inline-block">
+                        <div>{{ item.IngredientAmount }} {{ item.IngredientUnit }} left</div>
+                        <div>{{ item.DaysLeft }} days left</div>
+                    </div>
+                    <div class="d-inline-block edit-icons">
+                        <img src="{% static 'icons/edit.svg' %}" width="25px">
+                        <img src="{% static 'icons/cross.svg' %}" width="40px">
+                    </div>
                 </div>
             </div>
         {% endfor %}
@@ -29,8 +115,12 @@
 $(document).ready(function() {
 
     $(function () {
-        $('[data-toggle="popover"]').popover()
-    })
+        $('[data-toggle="popover"]').popover();
+    });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
 });
 </script>
